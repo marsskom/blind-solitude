@@ -13,6 +13,9 @@ func get_state() -> State:
 	return __state
 
 func change(state: State) -> void:
+	if self.__state.get_value() == state.get_value():
+		return
+
 	self.__append_state(state)
 
 func back() -> bool:
