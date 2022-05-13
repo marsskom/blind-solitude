@@ -86,6 +86,10 @@ config/icon="res://icon.png"
 config/macos_native_icon="res://icon.png"
 config/windows_native_icon="res://icon.png"
 
+[autoload]
+
+Log="*res://Classes/Foundation/Log.gd"
+
 [display]
 
 window/size/width=640

@@ -11,6 +11,7 @@ onready var accessories: Accessories = $Accessories
 
 func _physics_process(delta):
 	var state: State = self.__stateMachine.get_state()
+	Log.debug("Current state name '%s', value '%s'" % [state.get_name(), state.get_value()])
 
 	match state.get_value():
 		PlayerStates.IDLE:
