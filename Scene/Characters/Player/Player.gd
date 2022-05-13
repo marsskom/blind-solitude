@@ -1,38 +1,28 @@
-extends KinematicBody2D
+extends Character
 
-signal vector_changed
+enum PlayerStates {
+	IDLE,
+	MOVE,
+	PICK_UP,
+}
 
-export(int) var ACCELERATION: int = 500
-export(int) var MAX_SPEED: int = 80
-export(int) var FRICTION: int = 500
+onready var accessories: Accessories = $Accessories
 
-var __stateMachine: StateMachine
-var __velocity: Vector2 = Vector2.DOWN setget set_velocity, get_velocity
-var __last_vector: Vector2 = Vector2.DOWN
-
-onready var __idle_state = $States/Idle
-onready var __move_state = $States/Move
-
-func _ready():
-	self.__stateMachine = StateMachine.new(self.__idle_state.get_state())
 
 func _physics_process(delta):
-	var vector = create_vector(delta)
+	var state: State = self.__stateMachine.get_state()
 
-	emit_signal("vector_changed", vector)
+	match state.get_value():
+		PlayerStates.IDLE:
+			idle_move_state(delta)
+		PlayerStates.MOVE:
+			idle_move_state(delta)
+		PlayerStates.PICK_UP:
+			if not state.is_blocked():
+				self.__stateMachine.change(states.get("Idle"))
 
-	if vector != Vector2.ZERO:
-		move_process(vector, delta)
-	else:
-		idle_process(delta)
 
-func set_velocity(velocity: Vector2) -> void:
-	__velocity = velocity
-
-func get_velocity() -> Vector2:
-	return __velocity
-
-func create_vector(delta) -> Vector2:
+func idle_move_state(delta):
 	var vector = Vector2.DOWN
 	vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -41,20 +31,28 @@ func create_vector(delta) -> Vector2:
 	if vector != Vector2.ZERO:
 		self.__last_vector = vector
 
-	return vector
-
-func idle_process(delta) -> void:
 	emit_signal("vector_changed", self.__last_vector)
-	self.__stateMachine.change(self.__idle_state.get_state())
-	self.set_velocity(
-		self.get_velocity().move_toward(self.__last_vector, FRICTION * delta)
-	)
 
-func move_process(vector: Vector2, delta) -> void:
-	self.__stateMachine.change(self.__move_state.get_state())
+	if vector != Vector2.ZERO:
+		self.__stateMachine.change(states.get("Move"))
+		.move_process(vector, delta)
+	else:
+		self.__stateMachine.change(states.get("Idle"))
+		.idle_process(delta)
 
-	self.set_velocity(
-		self.get_velocity().move_toward(vector * MAX_SPEED, ACCELERATION * delta)
-	)
 
-	self.set_velocity(move_and_slide(self.get_velocity()))
+func _input(event):
+	var state: State = self.__stateMachine.get_state()
+	if state.is_blocked():
+		return
+
+	if Input.is_action_just_pressed("interaction"):
+		state = states.get("PickUp")
+
+	if Input.is_action_just_pressed("ui_select"):
+		accessories.get("PinkSnapBack").visible = not accessories.get("PinkSnapBack").visible
+
+	if null == state:
+		return
+
+	self.__stateMachine.change(state)

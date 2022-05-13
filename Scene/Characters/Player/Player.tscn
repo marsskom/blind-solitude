@@ -1,11 +1,18 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://assets/Player/player-sprite.png" type="Texture" id=1]
 [ext_resource path="res://Scene/Characters/Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://Scene/Characters/Player/State/Idle.gd" type="Script" id=3]
-[ext_resource path="res://Scene/Characters/Player/State/Move.gd" type="Script" id=4]
+[ext_resource path="res://Classes/Foundation/States/State.gd" type="Script" id=3]
+[ext_resource path="res://Classes/Foundation/States/StatesCollection.gd" type="Script" id=4]
+[ext_resource path="res://Classes/Foundation/States/BlockedStates/AnimationBlockedState.gd" type="Script" id=5]
+[ext_resource path="res://Scene/Stuff/Clothes/Hats/PinkSnapBack.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Classes/Characters/Accessories.gd" type="Script" id=7]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="CapsuleShape2D" id=25]
+radius = 6.0
+height = 8.0
+
+[sub_resource type="Animation" id=26]
 resource_name = "IdleDown"
 length = 0.6
 loop = true
@@ -22,7 +29,7 @@ tracks/0/keys = {
 "values": [ 74, 75, 76, 77, 78, 79 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=27]
 resource_name = "IdleLeft"
 length = 0.6
 loop = true
@@ -39,7 +46,7 @@ tracks/0/keys = {
 "values": [ 68, 69, 70, 71, 72, 73 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=28]
 resource_name = "IdleRight"
 length = 0.6
 loop = true
@@ -56,7 +63,7 @@ tracks/0/keys = {
 "values": [ 56, 57, 58, 59, 60, 61 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=29]
 resource_name = "IdleUp"
 length = 0.6
 loop = true
@@ -72,53 +79,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 62, 63, 64, 65, 66, 67 ]
 }
-
-[sub_resource type="Animation" id=2]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 77 ]
-}
-
-[sub_resource type="AnimationNodeAnimation" id=6]
-animation = "IdleLeft"
-
-[sub_resource type="AnimationNodeAnimation" id=7]
-animation = "IdleDown"
-
-[sub_resource type="AnimationNodeAnimation" id=8]
-animation = "IdleRight"
-
-[sub_resource type="AnimationNodeAnimation" id=9]
-animation = "IdleUp"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=10]
-blend_point_0/node = SubResource( 6 )
-blend_point_0/pos = Vector2( -1, 0 )
-blend_point_1/node = SubResource( 7 )
-blend_point_1/pos = Vector2( 0, 1.1 )
-blend_point_2/node = SubResource( 8 )
-blend_point_2/pos = Vector2( 1, 0 )
-blend_point_3/node = SubResource( 9 )
-blend_point_3/pos = Vector2( 0, -1.1 )
-min_space = Vector2( -1, -1.1 )
-max_space = Vector2( 1, 1.1 )
-blend_mode = 1
-
-[sub_resource type="AnimationNodeStateMachine" id=11]
-states/Idle/node = SubResource( 10 )
-states/Idle/position = Vector2( 263.667, 106.333 )
-start_node = "Idle"
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 [sub_resource type="Animation" id=13]
 resource_name = "MoveDown"
@@ -188,6 +148,126 @@ tracks/0/keys = {
 "values": [ 118, 119, 120, 121, 122, 123 ]
 }
 
+[sub_resource type="Animation" id=42]
+resource_name = "PickUpDown"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("States/PickUp")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "__on_animation_ended"
+} ]
+}
+
+[sub_resource type="Animation" id=39]
+resource_name = "PickUpLeft"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("States/PickUp")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "__on_animation_ended"
+} ]
+}
+
+[sub_resource type="Animation" id=40]
+resource_name = "PickUpRight"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("States/PickUp")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "__on_animation_ended"
+} ]
+}
+
+[sub_resource type="Animation" id=41]
+resource_name = "PickUpUp"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("States/PickUp")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "__on_animation_ended"
+} ]
+}
+
 [sub_resource type="Animation" id=16]
 length = 0.001
 tracks/0/type = "value"
@@ -215,6 +295,31 @@ tracks/1/keys = {
 "values": [ 1 ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "IdleLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=33]
+animation = "IdleRight"
+
+[sub_resource type="AnimationNodeAnimation" id=37]
+animation = "IdleDown"
+
+[sub_resource type="AnimationNodeAnimation" id=38]
+animation = "IdleUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=34]
+blend_point_0/node = SubResource( 30 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 33 )
+blend_point_1/pos = Vector2( 1, 0 )
+blend_point_2/node = SubResource( 37 )
+blend_point_2/pos = Vector2( 0, 1.1 )
+blend_point_3/node = SubResource( 38 )
+blend_point_3/pos = Vector2( 0, -1.1 )
+min_space = Vector2( -1, -1.1 )
+max_space = Vector2( 1, 1.1 )
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id=18]
 animation = "MoveLeft"
 
@@ -240,10 +345,48 @@ min_space = Vector2( -1, -1.1 )
 max_space = Vector2( 1, 1.1 )
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id=43]
+animation = "PickUpLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=44]
+animation = "PickUpRight"
+
+[sub_resource type="AnimationNodeAnimation" id=45]
+animation = "PickUpDown"
+
+[sub_resource type="AnimationNodeAnimation" id=46]
+animation = "PickUpUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=47]
+blend_point_0/node = SubResource( 43 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 44 )
+blend_point_1/pos = Vector2( 1, 0 )
+blend_point_2/node = SubResource( 45 )
+blend_point_2/pos = Vector2( 0, 1.1 )
+blend_point_3/node = SubResource( 46 )
+blend_point_3/pos = Vector2( 0, -1.1 )
+min_space = Vector2( -1, -1.1 )
+max_space = Vector2( 1, 1.1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+
 [sub_resource type="AnimationNodeStateMachine" id=23]
+states/Idle/node = SubResource( 34 )
+states/Idle/position = Vector2( 406.334, 128.245 )
 states/Move/node = SubResource( 22 )
-states/Move/position = Vector2( 271.667, 65 )
-start_node = "Move"
+states/Move/position = Vector2( 595.001, 128.226 )
+states/PickUp/node = SubResource( 47 )
+states/PickUp/position = Vector2( 407, 234.333 )
+transitions = [ "Idle", "Move", SubResource( 35 ), "Move", "Idle", SubResource( 36 ), "Idle", "PickUp", SubResource( 48 ), "PickUp", "Idle", SubResource( 49 ) ]
+start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=24]
 
@@ -252,6 +395,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+states_collection_node = NodePath("States")
 
 [node name="PlayerSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -262,38 +406,59 @@ frame = 1
 region_enabled = true
 region_rect = Rect2( 0, 0, 1792, 1280 )
 
-[node name="States" type="YSort" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource( 25 )
 
-[node name="Idle" type="Node" parent="States"]
-script = ExtResource( 3 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="States/Idle"]
-root_node = NodePath("../../..")
-anims/IdleDown = SubResource( 1 )
-anims/IdleLeft = SubResource( 3 )
-anims/IdleRight = SubResource( 4 )
-anims/IdleUp = SubResource( 5 )
-anims/RESET = SubResource( 2 )
-
-[node name="AnimationTree" type="AnimationTree" parent="States/Idle"]
-tree_root = SubResource( 11 )
-anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 12 )
-parameters/Idle/blend_position = Vector2( 0, 0 )
-
-[node name="Move" type="Node" parent="States"]
-script = ExtResource( 4 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="States/Move"]
-root_node = NodePath("../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/IdleDown = SubResource( 26 )
+anims/IdleLeft = SubResource( 27 )
+anims/IdleRight = SubResource( 28 )
+anims/IdleUp = SubResource( 29 )
 anims/MoveDown = SubResource( 13 )
 anims/MoveLeft = SubResource( 17 )
 anims/MoveRight = SubResource( 14 )
 anims/MoveUp = SubResource( 15 )
+anims/PickUpDown = SubResource( 42 )
+anims/PickUpLeft = SubResource( 39 )
+anims/PickUpRight = SubResource( 40 )
+anims/PickUpUp = SubResource( 41 )
 anims/RESET = SubResource( 16 )
 
-[node name="AnimationTree" type="AnimationTree" parent="States/Move"]
+[node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 23 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 24 )
+parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Move/blend_position = Vector2( 0, 0 )
+parameters/PickUp/blend_position = Vector2( 0, 0 )
+
+[node name="States" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Idle" type="Node" parent="States"]
+script = ExtResource( 3 )
+animation_tree_node = NodePath("../../AnimationTree")
+character_node = NodePath("../..")
+
+[node name="Move" type="Node" parent="States"]
+script = ExtResource( 3 )
+animation_tree_node = NodePath("../../AnimationTree")
+character_node = NodePath("../..")
+animation_name = "Move"
+state_value = 1
+
+[node name="PickUp" type="Node" parent="States"]
+script = ExtResource( 5 )
+animation_tree_node = NodePath("../../AnimationTree")
+character_node = NodePath("../..")
+animation_name = "PickUp"
+state_value = 2
+
+[node name="Accessories" type="Node" parent="."]
+script = ExtResource( 7 )
+character_node = NodePath("..")
+
+[node name="PinkSnapBack" parent="Accessories" instance=ExtResource( 6 )]
+visible = false

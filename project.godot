@@ -9,6 +9,26 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Accessories",
+"language": "GDScript",
+"path": "res://Classes/Characters/Accessories.gd"
+}, {
+"base": "BlockedState",
+"class": "AnimationBlockedState",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/BlockedStates/AnimationBlockedState.gd"
+}, {
+"base": "State",
+"class": "BlockedState",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/BlockedState.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://Classes/Characters/Character.gd"
+}, {
 "base": "Reference",
 "class": "GutHookScript",
 "language": "GDScript",
@@ -19,15 +39,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gut/test.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
-"path": "res://Classes/Foundation/State/State.gd"
+"path": "res://Classes/Foundation/States/State.gd"
 }, {
 "base": "Reference",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://Classes/Foundation/State/StateMachine.gd"
+"path": "res://Classes/Foundation/States/StateMachine.gd"
+}, {
+"base": "Node",
+"class": "StatesCollection",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/StatesCollection.gd"
+}, {
+"base": "Node",
+"class": "Stuff",
+"language": "GDScript",
+"path": "res://Classes/Stuff/Stuff.gd"
 }, {
 "base": "State",
 "class": "TestCustomState",
@@ -35,10 +65,16 @@ _global_script_classes=[ {
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
 } ]
 _global_script_class_icons={
+"Accessories": "",
+"AnimationBlockedState": "",
+"BlockedState": "",
+"Character": "",
 "GutHookScript": "",
 "GutTest": "",
 "State": "",
 "StateMachine": "",
+"StatesCollection": "",
+"Stuff": "",
 "TestCustomState": ""
 }
 
@@ -55,7 +91,7 @@ config/windows_native_icon="res://icon.png"
 window/size/width=640
 window/size/height=480
 window/size/test_width=1920
-window/size/test_height=1440
+window/size/test_height=1080
 window/stretch/mode="2d"
 
 [editor_plugins]
@@ -120,6 +156,20 @@ ui_down={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":83,"unicode":0,"echo":false,"script":null)
  ]
 }
+interaction={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Footprints"
+2d_physics/layer_3="PlayerHurtbox"
+2d_physics/layer_4="EnemyHurtbox"
+2d_physics/layer_5="Enemy"
+2d_physics/layer_6="SoftCollision"
 
 [logging]
 
