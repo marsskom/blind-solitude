@@ -1,9 +1,12 @@
 class_name StateMachine
 
+signal state_changed
+
 export(int) var max_history_count: int = 5
 
 var __state: State setget , get_state
 var __history: Array = []
+
 
 func _init(state: State) -> void:
 	self.__state = state
@@ -19,6 +22,8 @@ func change(state: State) -> void:
 		return
 
 	self.__append_state(state)
+
+	emit_signal("state_changed", state)
 
 
 func back() -> bool:

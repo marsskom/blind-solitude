@@ -6,6 +6,9 @@ enum PlayerStates {
 	PICK_UP,
 }
 
+onready var accessories: Accessories = $Accessories
+
+
 func _physics_process(delta):
 	var state: State = self.__stateMachine.get_state()
 
@@ -31,8 +34,10 @@ func idle_move_state(delta):
 	emit_signal("vector_changed", self.__last_vector)
 
 	if vector != Vector2.ZERO:
+		self.__stateMachine.change(states.get("Move"))
 		.move_process(vector, delta)
 	else:
+		self.__stateMachine.change(states.get("Idle"))
 		.idle_process(delta)
 
 
@@ -43,6 +48,9 @@ func _input(event):
 
 	if Input.is_action_just_pressed("interaction"):
 		state = states.get("PickUp")
+
+	if Input.is_action_just_pressed("ui_select"):
+		accessories.get("PinkSnapBack").visible = not accessories.get("PinkSnapBack").visible
 
 	if null == state:
 		return

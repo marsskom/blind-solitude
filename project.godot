@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Accessories",
+"language": "GDScript",
+"path": "res://Classes/Characters/Accessories.gd"
+}, {
 "base": "BlockedState",
 "class": "AnimationBlockedState",
 "language": "GDScript",
@@ -49,12 +54,18 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Foundation/States/StatesCollection.gd"
 }, {
+"base": "Node",
+"class": "Stuff",
+"language": "GDScript",
+"path": "res://Classes/Stuff/Stuff.gd"
+}, {
 "base": "State",
 "class": "TestCustomState",
 "language": "GDScript",
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
 } ]
 _global_script_class_icons={
+"Accessories": "",
 "AnimationBlockedState": "",
 "BlockedState": "",
 "Character": "",
@@ -63,6 +74,7 @@ _global_script_class_icons={
 "State": "",
 "StateMachine": "",
 "StatesCollection": "",
+"Stuff": "",
 "TestCustomState": ""
 }
 
