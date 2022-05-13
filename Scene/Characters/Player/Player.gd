@@ -1,6 +1,9 @@
 extends Character
 
 func _physics_process(delta):
+	if (self.__stateMachine.get_state().is_blocked()):
+		return
+
 	var vector = Vector2.DOWN
 	vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -15,3 +18,8 @@ func _physics_process(delta):
 		self.move_process(vector, delta)
 	else:
 		self.idle_process(delta)
+
+
+func _input(event):
+	if Input.is_action_just_pressed("interaction"):
+		self.__stateMachine.change(states.get("PickUp"))

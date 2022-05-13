@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "State",
+"class": "AnimationBlockedState",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/BlockedStates/AnimationBlockedState.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
@@ -27,17 +32,17 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
-"path": "res://Classes/Foundation/State/State.gd"
+"path": "res://Classes/Foundation/States/State.gd"
 }, {
 "base": "Reference",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://Classes/Foundation/State/StateMachine.gd"
+"path": "res://Classes/Foundation/States/StateMachine.gd"
 }, {
 "base": "Node",
 "class": "StatesCollection",
 "language": "GDScript",
-"path": "res://Classes/Foundation/State/StatesCollection.gd"
+"path": "res://Classes/Foundation/States/StatesCollection.gd"
 }, {
 "base": "State",
 "class": "TestCustomState",
@@ -45,6 +50,7 @@ _global_script_classes=[ {
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
 } ]
 _global_script_class_icons={
+"AnimationBlockedState": "",
 "Character": "",
 "GutHookScript": "",
 "GutTest": "",
@@ -130,6 +136,11 @@ ui_down={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":83,"unicode":0,"echo":false,"script":null)
+ ]
+}
+interaction={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":69,"unicode":0,"echo":false,"script":null)
  ]
 }
 
