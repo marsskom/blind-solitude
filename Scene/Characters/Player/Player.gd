@@ -1,9 +1,25 @@
 extends Character
 
-func _physics_process(delta):
-	if (self.__stateMachine.get_state().is_blocked()):
-		return
+enum PlayerStates {
+	IDLE,
+	MOVE,
+	PICK_UP,
+}
 
+func _physics_process(delta):
+	var state: State = self.__stateMachine.get_state()
+
+	match state.get_value():
+		PlayerStates.IDLE:
+			idle_move_state(delta)
+		PlayerStates.MOVE:
+			idle_move_state(delta)
+		PlayerStates.PICK_UP:
+			if not state.is_blocked():
+				self.__stateMachine.change(states.get("Idle"))
+
+
+func idle_move_state(delta):
 	var vector = Vector2.DOWN
 	vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -15,11 +31,20 @@ func _physics_process(delta):
 	emit_signal("vector_changed", self.__last_vector)
 
 	if vector != Vector2.ZERO:
-		self.move_process(vector, delta)
+		.move_process(vector, delta)
 	else:
-		self.idle_process(delta)
+		.idle_process(delta)
 
 
 func _input(event):
+	var state: State = self.__stateMachine.get_state()
+	if state.is_blocked():
+		return
+
 	if Input.is_action_just_pressed("interaction"):
-		self.__stateMachine.change(states.get("PickUp"))
+		state = states.get("PickUp")
+
+	if null == state:
+		return
+
+	self.__stateMachine.change(state)

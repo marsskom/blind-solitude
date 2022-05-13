@@ -52,10 +52,8 @@ func __on_vector_changed(vector: Vector2) -> void:
 
 
 func __on_activated():
-	animation_tree.active = true
 	animation_state.travel(animation_name)
 
 
 func __on_changed():
 	animation_state.stop()
-	animation_tree.active = false

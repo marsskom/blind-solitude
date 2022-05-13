@@ -168,7 +168,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.1 ),
+"times": PoolRealArray( 1.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -198,7 +198,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.1 ),
+"times": PoolRealArray( 1.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -228,7 +228,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.1 ),
+"times": PoolRealArray( 1.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -258,7 +258,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.1 ),
+"times": PoolRealArray( 1.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -426,6 +426,7 @@ anims/RESET = SubResource( 16 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 23 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 24 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Move/blend_position = Vector2( 0, 0 )
@@ -451,4 +452,4 @@ script = ExtResource( 5 )
 animation_tree_node = NodePath("../../AnimationTree")
 character_node = NodePath("../..")
 animation_name = "PickUp"
-state_value = 3
+state_value = 2
