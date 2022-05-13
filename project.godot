@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://Classes/Characters/Character.gd"
+}, {
 "base": "Reference",
 "class": "GutHookScript",
 "language": "GDScript",
@@ -29,16 +34,23 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Foundation/State/StateMachine.gd"
 }, {
+"base": "Node",
+"class": "StatesCollection",
+"language": "GDScript",
+"path": "res://Classes/Foundation/State/StatesCollection.gd"
+}, {
 "base": "State",
 "class": "TestCustomState",
 "language": "GDScript",
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
 } ]
 _global_script_class_icons={
+"Character": "",
 "GutHookScript": "",
 "GutTest": "",
 "State": "",
 "StateMachine": "",
+"StatesCollection": "",
 "TestCustomState": ""
 }
 
