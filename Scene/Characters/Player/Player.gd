@@ -14,7 +14,7 @@ onready var __idle_state = $States/Idle
 onready var __move_state = $States/Move
 
 func _ready():
-	self.__stateMachine = StateMachine.new(self.__idle_state.get_state())
+	self.__stateMachine = StateMachine.new(self.__idle_state)
 
 func _physics_process(delta):
 	var vector = create_vector(delta)
@@ -45,13 +45,13 @@ func create_vector(delta) -> Vector2:
 
 func idle_process(delta) -> void:
 	emit_signal("vector_changed", self.__last_vector)
-	self.__stateMachine.change(self.__idle_state.get_state())
+	self.__stateMachine.change(self.__idle_state)
 	self.set_velocity(
 		self.get_velocity().move_toward(self.__last_vector, FRICTION * delta)
 	)
 
 func move_process(vector: Vector2, delta) -> void:
-	self.__stateMachine.change(self.__move_state.get_state())
+	self.__stateMachine.change(self.__move_state)
 
 	self.set_velocity(
 		self.get_velocity().move_toward(vector * MAX_SPEED, ACCELERATION * delta)

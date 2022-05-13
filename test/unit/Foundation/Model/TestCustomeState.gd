@@ -5,8 +5,14 @@ var __active_mess: String
 var __change_mess: String
 
 func _init(
-	name: String, value: int, active_mess: String, change_mess: String
-	).(name, value) -> void:
+	name: String,
+	value: int,
+	active_mess: String = "activated",
+	change_mess: String = "changed"
+) -> void:
+
+	self.__name = name
+	self.__value = value
 
 	self.__active_mess = active_mess
 	self.__change_mess = change_mess
