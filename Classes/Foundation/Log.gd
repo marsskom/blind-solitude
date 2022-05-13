@@ -29,8 +29,19 @@ func critical(message: String) -> void:
 func __print(category: String, message: String) -> void:
 	if ProjectSettings.get_setting("logging/file_logging/enable_file_logging"):
 		var date_time: Dictionary = OS.get_datetime()
-		print(
-			"%02d:%02d:%02d [%s] "
-				% [date_time.hour, date_time.minute, date_time.second, category],
-			message
-		)
+		var format = "%02d:%02d:%02d [%s] " % [
+			date_time.hour,
+			date_time.minute,
+			date_time.second,
+			category
+		]
+
+		print(format, message)
+
+		match category:
+			"WARNING":
+				push_warning(message)
+			"CRITICAL":
+				push_error(message)
+			"ERROR":
+				push_error(message)

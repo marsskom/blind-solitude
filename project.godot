@@ -63,6 +63,11 @@ _global_script_classes=[ {
 "class": "TestCustomState",
 "language": "GDScript",
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
+}, {
+"base": "TimeSystem",
+"class": "TestTimeSystem",
+"language": "GDScript",
+"path": "res://test/unit/Foundation/Model/TestTimeSystem.gd"
 } ]
 _global_script_class_icons={
 "Accessories": "",
@@ -75,7 +80,8 @@ _global_script_class_icons={
 "StateMachine": "",
 "StatesCollection": "",
 "Stuff": "",
-"TestCustomState": ""
+"TestCustomState": "",
+"TestTimeSystem": ""
 }
 
 [application]
@@ -89,6 +95,7 @@ config/windows_native_icon="res://icon.png"
 [autoload]
 
 Log="*res://Classes/Foundation/Log.gd"
+TimeSystem="*res://Classes/Foundation/Time/TimeSystem.gd"
 
 [display]
 

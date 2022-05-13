@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scene/World/Weather/Weather.gd" type="Script" id=1]
+[ext_resource path="res://Scene/World/Weather/Components/DayNightCycle.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "DayNightCycle"
+length = 24.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10, 13, 18, 22.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.0196078, 0.0823529, 0.168627, 1 ), Color( 0.890196, 0.831373, 0.658824, 1 ), Color( 0.968627, 0.952941, 0.878431, 1 ), Color( 0.980392, 0.886275, 0.74902, 1 ), Color( 0.372549, 0.368627, 0.376471, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.890196, 0.831373, 0.658824, 1 ) ]
+}
+
+[node name="Weather" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="DayNightCycle" type="CanvasModulate" parent="YSort"]
+color = Color( 0.890196, 0.831373, 0.658824, 1 )
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="YSort/DayNightCycle"]
+anims/DayNightCycle = SubResource( 1 )
+anims/RESET = SubResource( 2 )
