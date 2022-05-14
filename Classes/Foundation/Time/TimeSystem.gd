@@ -43,6 +43,7 @@ func get_current_datetime() -> Datetime:
 		_make_minutes(value)
 	)
 
+
 func get_datetime(seconds: int) -> Datetime:
 	return Datetime.new(
 		_make_days(seconds),

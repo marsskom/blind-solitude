@@ -1,16 +1,18 @@
 extends Node
 
+signal day_night_animation_changed
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var moon: Moon = Moon.new()
+
+func _process(delta):
+	if _is_moon_night_time() and moon.is_full_moon():
+		emit_signal("day_night_animation_changed", "MoonLight")
+	else:
+		emit_signal("day_night_animation_changed", "DayNightCycle")
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func _is_moon_night_time() -> bool:
+	var datetime: Datetime = TimeSystem.get_current_datetime()
+	var hours = datetime.get_hours()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	return hours >= 0 and hours <= 4

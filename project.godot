@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gut/test.gd"
 }, {
+"base": "Reference",
+"class": "Moon",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Moon.gd"
+}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -77,6 +82,7 @@ _global_script_class_icons={
 "Datetime": "",
 "GutHookScript": "",
 "GutTest": "",
+"Moon": "",
 "State": "",
 "StateMachine": "",
 "StatesCollection": "",
