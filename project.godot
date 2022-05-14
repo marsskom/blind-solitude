@@ -99,10 +99,10 @@ TimeSystem="*res://Classes/Foundation/Time/TimeSystem.gd"
 
 [display]
 
-window/size/width=640
-window/size/height=480
-window/size/test_width=1920
-window/size/test_height=1080
+window/size/width=568
+window/size/height=320
+window/size/test_width=2272
+window/size/test_height=1280
 window/stretch/mode="2d"
 
 [editor_plugins]
@@ -181,6 +181,7 @@ interaction={
 2d_physics/layer_4="EnemyHurtbox"
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="SoftCollision"
+2d_physics/layer_7="StaticThingsLayer"
 
 [logging]
 
