@@ -14,10 +14,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 10, 13, 18, 22.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 2, 4.1, 10, 13, 18, 22.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0.0196078, 0.0823529, 0.168627, 1 ), Color( 0.890196, 0.831373, 0.658824, 1 ), Color( 0.968627, 0.952941, 0.878431, 1 ), Color( 0.980392, 0.886275, 0.74902, 1 ), Color( 0.372549, 0.368627, 0.376471, 1 ) ]
+"values": [ Color( 0.0431373, 0.121569, 0.235294, 1 ), Color( 0.0431373, 0.121569, 0.231373, 1 ), Color( 0.0745098, 0.156863, 0.270588, 1 ), Color( 0.890196, 0.831373, 0.658824, 1 ), Color( 0.968627, 0.952941, 0.878431, 1 ), Color( 0.980392, 0.886275, 0.74902, 1 ), Color( 0.372549, 0.368627, 0.376471, 1 ) ]
 }
 
 [sub_resource type="Animation" id=2]
