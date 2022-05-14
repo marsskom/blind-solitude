@@ -62,6 +62,7 @@ visible = false
 position = Vector2( 153, 212 )
 
 [node name="DayNightCycle" type="CanvasModulate" parent="YSort"]
+visible = false
 color = Color( 0.890196, 0.831373, 0.658824, 1 )
 script = ExtResource( 2 )
 

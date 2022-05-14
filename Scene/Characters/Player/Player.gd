@@ -8,7 +8,6 @@ enum PlayerStates {
 
 onready var accessories: Accessories = $Accessories
 
-
 func _physics_process(delta):
 	var state: State = stateMachine.get_state()
 

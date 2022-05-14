@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://Classes/Foundation/Time/Datetime.gd"
 }, {
 "base": "Reference",
+"class": "Distance",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Measurement/Distance.gd"
+}, {
+"base": "Reference",
 "class": "GutHookScript",
 "language": "GDScript",
 "path": "res://addons/gut/hook_script.gd"
@@ -73,6 +78,11 @@ _global_script_classes=[ {
 "class": "TestCustomState",
 "language": "GDScript",
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
+}, {
+"base": "Node",
+"class": "Wind",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Wind.gd"
 } ]
 _global_script_class_icons={
 "Accessories": "",
@@ -80,6 +90,7 @@ _global_script_class_icons={
 "BlockedState": "",
 "Character": "",
 "Datetime": "",
+"Distance": "",
 "GutHookScript": "",
 "GutTest": "",
 "Moon": "",
@@ -87,7 +98,8 @@ _global_script_class_icons={
 "StateMachine": "",
 "StatesCollection": "",
 "Stuff": "",
-"TestCustomState": ""
+"TestCustomState": "",
+"Wind": ""
 }
 
 [application]

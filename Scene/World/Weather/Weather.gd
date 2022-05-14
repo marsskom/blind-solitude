@@ -4,6 +4,7 @@ signal day_night_animation_changed
 
 onready var moon: Moon = Moon.new()
 
+
 func _process(delta):
 	if _is_moon_night_time() and moon.is_full_moon():
 		emit_signal("day_night_animation_changed", "MoonLight")
