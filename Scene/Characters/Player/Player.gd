@@ -10,7 +10,7 @@ onready var accessories: Accessories = $Accessories
 
 
 func _physics_process(delta):
-	var state: State = self.__stateMachine.get_state()
+	var state: State = stateMachine.get_state()
 
 	match state.get_value():
 		PlayerStates.IDLE:
@@ -19,7 +19,7 @@ func _physics_process(delta):
 			idle_move_state(delta)
 		PlayerStates.PICK_UP:
 			if not state.is_blocked():
-				self.__stateMachine.change(states.get("Idle"))
+				stateMachine.change(states.get("Idle"))
 
 
 func idle_move_state(delta):
@@ -29,20 +29,20 @@ func idle_move_state(delta):
 	vector = vector.normalized()
 
 	if vector != Vector2.ZERO:
-		self.__last_vector = vector
+		last_vector = vector
 
-	emit_signal("vector_changed", self.__last_vector)
+	emit_signal("vector_changed", last_vector)
 
 	if vector != Vector2.ZERO:
-		self.__stateMachine.change(states.get("Move"))
+		stateMachine.change(states.get("Move"))
 		.move_process(vector, delta)
 	else:
-		self.__stateMachine.change(states.get("Idle"))
+		stateMachine.change(states.get("Idle"))
 		.idle_process(delta)
 
 
 func _input(event):
-	var state: State = self.__stateMachine.get_state()
+	var state: State = stateMachine.get_state()
 	if state.is_blocked():
 		return
 
@@ -55,4 +55,4 @@ func _input(event):
 	if null == state:
 		return
 
-	self.__stateMachine.change(state)
+	stateMachine.change(state)

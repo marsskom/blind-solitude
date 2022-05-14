@@ -175,7 +175,7 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "__on_animation_ended"
+"method": "_on_animation_ended"
 } ]
 }
 
@@ -205,7 +205,7 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "__on_animation_ended"
+"method": "_on_animation_ended"
 } ]
 }
 
@@ -235,7 +235,7 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "__on_animation_ended"
+"method": "_on_animation_ended"
 } ]
 }
 
@@ -265,7 +265,7 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "__on_animation_ended"
+"method": "_on_animation_ended"
 } ]
 }
 

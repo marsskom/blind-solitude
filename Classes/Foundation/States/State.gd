@@ -6,12 +6,10 @@ signal changed
 
 export(NodePath) var animation_tree_node: NodePath
 export(NodePath) var character_node: NodePath
-export(String) var animation_name: String = "Idle"
-export(int) var state_value: int = 0
+export(String) var animation_name: String = "Idle" setget , get_name
+export(int) var state_value: int = 0 setget , get_value
 
-var __name: String setget , get_name
-var __value: int setget , get_value
-var __is_blocked: bool = false setget block, is_blocked
+var has_blocked: bool = false setget block, is_blocked
 
 onready var animation_tree: AnimationTree = get_node(animation_tree_node) as AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
@@ -20,40 +18,37 @@ onready var character: Node2D  = get_node(character_node) as Node2D
 
 
 func _ready():
-	self.__name = animation_name
-	self.__value = state_value
-
 	animation_tree.set("parameters/Idle/blend_position", Vector2.DOWN)
 
-	self.connect("activated", self, "__on_activated")
-	self.connect("changed", self, "__on_changed")
+	self.connect("activated", self, "_on_activated")
+	self.connect("changed", self, "_on_changed")
 
-	character.connect("vector_changed", self, "__on_vector_changed")
+	character.connect("vector_changed", self, "_on_vector_changed")
 
 
 func get_name() -> String:
-	return __name
+	return animation_name
 
 
 func get_value() -> int:
-	return __value
+	return state_value
 
 
 func block(value: bool) -> void:
-	__is_blocked = value
+	has_blocked = value
 
 
 func is_blocked() -> bool:
-	return __is_blocked
+	return has_blocked
 
 
-func __on_vector_changed(vector: Vector2) -> void:
+func _on_vector_changed(vector: Vector2) -> void:
 	animation_tree.set("parameters/%s/blend_position" % animation_name, vector)
 
 
-func __on_activated():
+func _on_activated():
 	animation_state.travel(animation_name)
 
 
-func __on_changed():
+func _on_changed():
 	animation_state.stop()

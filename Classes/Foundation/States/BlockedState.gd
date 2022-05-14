@@ -7,10 +7,10 @@ func _init():
 	.block(true)
 
 
-func __on_activated():
+func _on_activated():
 	.block(true)
-	.__on_activated()
+	._on_activated()
 
-func __on_changed():
+func _on_changed():
 	.block(false)
-	.__on_changed()
+	._on_changed()

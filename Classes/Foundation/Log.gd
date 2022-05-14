@@ -4,29 +4,29 @@ func debug(message: String) -> void:
 	if !OS.is_debug_build():
 		return
 
-	self.__print("DEBUG", message)
+	_print("DEBUG", message)
 
 
 func info(message: String) -> void:
 	if !OS.is_debug_build():
 		return
 
-	self.__print("INFO", message)
+	_print("INFO", message)
 
 
 func warning(message: String) -> void:
-	self.__print("WARNING", message)
+	_print("WARNING", message)
 
 
 func error(message: String) -> void:
-	self.__print("ERROR", message)
+	_print("ERROR", message)
 
 
 func critical(message: String) -> void:
-	self.__print("CRITICAL", message)
+	_print("CRITICAL", message)
 
 
-func __print(category: String, message: String) -> void:
+func _print(category: String, message: String) -> void:
 	if ProjectSettings.get_setting("logging/file_logging/enable_file_logging"):
 		var date_time: Dictionary = OS.get_datetime()
 		var format = "%02d:%02d:%02d [%s] " % [
