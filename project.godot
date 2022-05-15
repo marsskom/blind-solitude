@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Characters/Character.gd"
 }, {
+"base": "Sprite",
+"class": "Cloud",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Cloud.gd"
+}, {
+"base": "Node",
+"class": "Clouds",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Clouds.gd"
+}, {
 "base": "Reference",
 "class": "Datetime",
 "language": "GDScript",
@@ -53,6 +63,16 @@ _global_script_classes=[ {
 "class": "Moon",
 "language": "GDScript",
 "path": "res://Classes/Foundation/Weather/Moon.gd"
+}, {
+"base": "Reference",
+"class": "RemoteTransform2DFactory",
+"language": "GDScript",
+"path": "res://Classes/Factories/RemoteTransform2DFactory.gd"
+}, {
+"base": "Reference",
+"class": "Speed",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Measurement/Speed.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -79,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
 }, {
+"base": "Reference",
+"class": "UUID",
+"language": "GDScript",
+"path": "res://Autoload/UUID.gd"
+}, {
 "base": "Node",
 "class": "Wind",
 "language": "GDScript",
@@ -89,16 +114,21 @@ _global_script_class_icons={
 "AnimationBlockedState": "",
 "BlockedState": "",
 "Character": "",
+"Cloud": "",
+"Clouds": "",
 "Datetime": "",
 "Distance": "",
 "GutHookScript": "",
 "GutTest": "",
 "Moon": "",
+"RemoteTransform2DFactory": "",
+"Speed": "",
 "State": "",
 "StateMachine": "",
 "StatesCollection": "",
 "Stuff": "",
 "TestCustomState": "",
+"UUID": "",
 "Wind": ""
 }
 
@@ -112,8 +142,8 @@ config/windows_native_icon="res://icon.png"
 
 [autoload]
 
-Log="*res://Classes/Foundation/Log.gd"
-TimeSystem="*res://Classes/Foundation/Time/TimeSystem.gd"
+Log="*res://Autoload/Log.gd"
+TimeSystem="*res://Autoload/TimeSystem.gd"
 
 [display]
 
@@ -200,6 +230,7 @@ interaction={
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="SoftCollision"
 2d_physics/layer_7="StaticThingsLayer"
+2d_physics/layer_8="CloudsCollision"
 
 [logging]
 

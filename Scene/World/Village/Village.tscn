@@ -14,6 +14,13 @@
 script = ExtResource( 8 )
 
 [node name="Weather" parent="." instance=ExtResource( 6 )]
+character_node = NodePath("../YSort/Player")
+
+[node name="Wind" parent="Weather/YSort" index="2"]
+variability = 3
+
+[node name="Clouds" parent="Weather/YSort" index="3"]
+max_clouds_count = 10
 
 [node name="Camera2D" parent="." instance=ExtResource( 3 )]
 position = Vector2( 213, 219 )
@@ -68,4 +75,9 @@ text = "coords: x = 1; y = 1"
 script = ExtResource( 9 )
 character_node = NodePath("../../YSort/Player")
 
+[editable path="Weather"]
+[editable path="Weather/YSort/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
+[editable path="Weather/YSort/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]
+[editable path="Weather/YSort/Clouds/Templates/ThirdTemplate/SoftCollisionComponent"]
+[editable path="Weather/YSort/Clouds/Templates/FourthTemplate/SoftCollisionComponent"]
 [editable path="Camera2D"]

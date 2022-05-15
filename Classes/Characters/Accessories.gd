@@ -2,26 +2,22 @@ extends Node
 class_name Accessories
 
 export(NodePath) var character_node: NodePath
+onready var character: Node2D  = get_node(character_node) as Node2D
 
 var collection: Dictionary = {} setget , get_all
 
-onready var character: Node2D  = get_node(character_node) as Node2D
 
 func _ready():
 	for node in get_children():
 		collection[node.name] = node as Node
-		_add_remote_transform(node)
+
+		character.call_deferred(
+			"add_child",
+			RemoteTransform2DFactory.create(node)
+		)
 
 	character.connect("vector_changed", self, "_on_vector_changed")
 	character.connect("state_changed", self, "_on_state_changed")
-
-
-func _add_remote_transform(node: Node) -> void:
-	var remote_transform_2d: RemoteTransform2D = RemoteTransform2D.new()
-	remote_transform_2d.set_name("RemoteTransform2D_%s" % node.name)
-	remote_transform_2d.remote_path = node.get_path()
-	remote_transform_2d.set_owner(character)
-	character.call_deferred("add_child", remote_transform_2d)
 
 
 func get(name: String) -> State:

@@ -1,22 +1,22 @@
 class_name Datetime
 
-var days: int = 0 setget , get_days
-var hours: int = 0 setget , get_hours
-var minutes: int = 0 setget , get_minutes
+var _days: int = 0 setget , get_days
+var _hours: int = 0 setget , get_hours
+var _minutes: int = 0 setget , get_minutes
 
 func _init(days: int, hours: int, minutes: int):
-	self.days = days
-	self.hours = hours
-	self.minutes = minutes
+	self._days = days
+	self._hours = hours
+	self._minutes = minutes
 
 
 func get_days() -> int:
-	return days
+	return _days
 
 
 func get_hours() -> int:
-	return hours
+	return _hours
 
 
 func get_minutes() -> int:
-	return minutes
+	return _minutes

@@ -80,6 +80,8 @@ func get_diff(time: float) -> float:
 func to_seconds(datetime: Datetime) -> float:
 	var min_multiply_seconds = get_minutes_in_hour() * get_seconds_in_minutes()
 
-	return datetime.get_days() * get_hours_in_day() * min_multiply_seconds
-	+ datetime.get_hours() * min_multiply_seconds
-	+ datetime.get_minutes() * get_seconds_in_minutes()
+	return (
+		(datetime.get_days() * get_hours_in_day() * min_multiply_seconds)
+		+ (datetime.get_hours() * min_multiply_seconds)
+		+ (datetime.get_minutes() * get_seconds_in_minutes())
+	)

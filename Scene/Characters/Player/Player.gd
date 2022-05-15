@@ -1,5 +1,7 @@
 extends Character
 
+signal player_position
+
 enum PlayerStates {
 	IDLE,
 	MOVE,
@@ -9,6 +11,8 @@ enum PlayerStates {
 onready var accessories: Accessories = $Accessories
 
 func _physics_process(delta):
+	emit_signal("player_position", global_position)
+
 	var state: State = stateMachine.get_state()
 
 	match state.get_value():
@@ -40,7 +44,7 @@ func idle_move_state(delta):
 		.idle_process(delta)
 
 
-func _input(event):
+func _input(_event):
 	var state: State = stateMachine.get_state()
 	if state.is_blocked():
 		return

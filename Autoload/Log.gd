@@ -1,32 +1,32 @@
 extends Node
 
-func debug(message: String) -> void:
+func debug(message) -> void:
 	if !OS.is_debug_build():
 		return
 
 	_print("DEBUG", message)
 
 
-func info(message: String) -> void:
+func info(message) -> void:
 	if !OS.is_debug_build():
 		return
 
 	_print("INFO", message)
 
 
-func warning(message: String) -> void:
+func warning(message) -> void:
 	_print("WARNING", message)
 
 
-func error(message: String) -> void:
+func error(message) -> void:
 	_print("ERROR", message)
 
 
-func critical(message: String) -> void:
+func critical(message) -> void:
 	_print("CRITICAL", message)
 
 
-func _print(category: String, message: String) -> void:
+func _print(category: String, message) -> void:
 	if ProjectSettings.get_setting("logging/file_logging/enable_file_logging"):
 		var date_time: Dictionary = OS.get_datetime()
 		var format = "%02d:%02d:%02d [%s] " % [
