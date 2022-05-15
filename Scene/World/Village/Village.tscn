@@ -67,6 +67,12 @@ clouds_count = 200
 rain_duration_minutes = 45
 time_between_rain_minutes = 360
 
+[node name="Snow" parent="Weather/YSort" index="5"]
+is_enabled = false
+clouds_count = 200
+snow_duration_minutes = 45
+time_between_snow_minutes = 360
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]

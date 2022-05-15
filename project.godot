@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Factories/RemoteTransform2DFactory.gd"
 }, {
+"base": "Node",
+"class": "Snow",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Snow.gd"
+}, {
 "base": "Reference",
 "class": "Speed",
 "language": "GDScript",
@@ -134,6 +139,7 @@ _global_script_class_icons={
 "Moon": "",
 "Rain": "",
 "RemoteTransform2DFactory": "",
+"Snow": "",
 "Speed": "",
 "State": "",
 "StateMachine": "",
