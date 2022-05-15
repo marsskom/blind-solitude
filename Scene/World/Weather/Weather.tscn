@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scene/World/Weather/Weather.gd" type="Script" id=1]
 [ext_resource path="res://Scene/World/Weather/Components/DayNightCycle.gd" type="Script" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://assets/Weather/Clouds/third_cloud.png" type="Texture" id=9]
 [ext_resource path="res://assets/Weather/Clouds/fourth_cloud.png" type="Texture" id=10]
 [ext_resource path="res://Classes/Foundation/Weather/Cloud.gd" type="Script" id=11]
+[ext_resource path="res://assets/Weather/rain_drop.png" type="Texture" id=12]
+[ext_resource path="res://Classes/Foundation/Weather/Rain.gd" type="Script" id=13]
 
 [sub_resource type="Animation" id=1]
 resource_name = "DayNightCycle"
@@ -75,6 +77,22 @@ height = 84.0
 [sub_resource type="CapsuleShape2D" id=7]
 radius = 34.0
 height = 86.0
+
+[sub_resource type="ParticlesMaterial" id=8]
+lifetime_randomness = 1.0
+emission_shape = 2
+emission_box_extents = Vector3( 350, 1, 1 )
+flag_disable_z = true
+spread = 1.0
+gravity = Vector3( 0, 80, 0 )
+initial_velocity = 20.0
+initial_velocity_random = 0.6
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 20.0
+scale = 0.03
+scale_random = 0.02
+color = Color( 0.678431, 0.772549, 1, 1 )
 
 [node name="Weather" type="Node2D"]
 script = ExtResource( 1 )
@@ -157,6 +175,20 @@ collision_mask = 128
 position = Vector2( -8, 5 )
 rotation = -1.5708
 shape = SubResource( 7 )
+
+[node name="Rain" type="Node" parent="YSort"]
+script = ExtResource( 13 )
+clouds_node = NodePath("../Clouds")
+
+[node name="Particles2D" type="Particles2D" parent="YSort/Rain"]
+position = Vector2( 220, -50 )
+emitting = false
+amount = 800
+lifetime = 5.0
+process_material = SubResource( 8 )
+texture = ExtResource( 12 )
+
+[node name="Timer" type="Timer" parent="YSort/Rain"]
 
 [connection signal="day_night_animation_changed" from="." to="YSort/DayNightCycle" method="_on_Weather_day_night_animation_changed"]
 

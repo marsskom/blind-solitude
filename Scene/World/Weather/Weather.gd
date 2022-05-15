@@ -10,6 +10,7 @@ onready var moon: Moon = Moon.new()
 
 func _ready():
 	character.connect("player_position", $YSort/Clouds, "_on_player_position")
+	character.connect("player_position", $YSort/Rain, "_on_player_position")
 
 
 func _process(_delta):

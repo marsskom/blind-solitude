@@ -7,11 +7,12 @@ signal pass_player_position
 export(NodePath) var wind_node: NodePath
 onready var wind: Wind  = get_node(wind_node) as Wind
 
-export(int) var max_clouds_count: int = 20
+export(int) var max_clouds_count: int = 10
 
 var _templates: Array = []
 var _speed_model: Speed
 var _player_position: Vector2 = Vector2.ZERO
+var _clouds_count: int = 0
 
 onready var rand_generator: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -24,13 +25,20 @@ func _ready():
 	for node in $Templates.get_children():
 		_templates.append(node as Sprite)
 
-	for i in range(0, max_clouds_count):
-		_make_cloud()
+	create_max_clouds()
 
 	wind.connect("wind_blow", self, "_on_wind_blow")
 
 
-func _make_cloud() -> Sprite:
+func create_max_clouds() -> void:
+	while _clouds_count < max_clouds_count:
+		_make_cloud()
+
+
+func _make_cloud() -> void:
+	if _clouds_count >= max_clouds_count:
+		return
+
 	_templates.shuffle()
 
 	var template = _templates[0]
@@ -48,7 +56,7 @@ func _make_cloud() -> Sprite:
 
 	add_child(sprite)
 
-	return sprite
+	_clouds_count += 1
 
 
 func _on_wind_blow(direction: Vector2, speed: float) -> void:
@@ -64,4 +72,6 @@ func _on_player_position(player_position: Vector2) -> void:
 
 
 func _on_cloud_vanished() -> void:
+	_clouds_count -= 1
+
 	_make_cloud()

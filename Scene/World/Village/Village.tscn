@@ -13,17 +13,8 @@
 [node name="Village" type="Node2D"]
 script = ExtResource( 8 )
 
-[node name="Weather" parent="." instance=ExtResource( 6 )]
-character_node = NodePath("../YSort/Player")
-
-[node name="Wind" parent="Weather/YSort" index="2"]
-variability = 3
-
-[node name="Clouds" parent="Weather/YSort" index="3"]
-max_clouds_count = 10
-
 [node name="Camera2D" parent="." instance=ExtResource( 3 )]
-position = Vector2( 213, 219 )
+position = Vector2( 197, 175 )
 current = true
 zoom = Vector2( 1.2, 1.2 )
 smoothing_enabled = true
@@ -47,7 +38,7 @@ tile_data = PoolIntArray( -983036, 0, 65536, -983035, 0, 2, -983034, 0, 3, -9830
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 213, 219 )
+position = Vector2( 197, 175 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
 remote_path = NodePath("../../../Camera2D")
@@ -64,6 +55,18 @@ position = Vector2( 100, 174 )
 [node name="HighGreenTree4" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 72, 178 )
 
+[node name="Weather" parent="." instance=ExtResource( 6 )]
+position = Vector2( 0, -78 )
+character_node = NodePath("../YSort/Player")
+
+[node name="Wind" parent="Weather/YSort" index="2"]
+variability = 3
+
+[node name="Rain" parent="Weather/YSort" index="4"]
+clouds_count = 200
+rain_duration_minutes = 45
+time_between_rain_minutes = 360
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -75,9 +78,9 @@ text = "coords: x = 1; y = 1"
 script = ExtResource( 9 )
 character_node = NodePath("../../YSort/Player")
 
+[editable path="Camera2D"]
 [editable path="Weather"]
 [editable path="Weather/YSort/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
 [editable path="Weather/YSort/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]
 [editable path="Weather/YSort/Clouds/Templates/ThirdTemplate/SoftCollisionComponent"]
 [editable path="Weather/YSort/Clouds/Templates/FourthTemplate/SoftCollisionComponent"]
-[editable path="Camera2D"]
