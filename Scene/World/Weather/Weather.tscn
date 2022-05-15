@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scene/World/Weather/Weather.gd" type="Script" id=1]
 [ext_resource path="res://Scene/World/Weather/Components/DayNightCycle.gd" type="Script" id=2]
@@ -60,21 +60,6 @@ tracks/0/keys = {
 "values": [ Color( 0.890196, 0.831373, 0.658824, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 1592, 1056 )
-
-[sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 864, 118.75 )
-
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 177, 672 )
-
-[sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 868, 123 )
-
-[sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 190, 676 )
-
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 55.0
 height = 120.0
@@ -116,54 +101,6 @@ script = ExtResource( 4 )
 [node name="Clouds" type="Node" parent="YSort"]
 script = ExtResource( 5 )
 wind_node = NodePath("../Wind")
-
-[node name="CloudRegion" type="Area2D" parent="YSort/Clouds"]
-position = Vector2( 286, 161 )
-collision_layer = 0
-collision_mask = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Clouds/CloudRegion"]
-visible = false
-modulate = Color( 0.858824, 0.380392, 0.184314, 1 )
-position = Vector2( 0, -1 )
-shape = SubResource( 8 )
-
-[node name="SpawnRectangles" type="YSort" parent="YSort/Clouds/CloudRegion"]
-
-[node name="Top" type="Area2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles"]
-position = Vector2( 18, -545 )
-collision_layer = 128
-collision_mask = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles/Top"]
-shape = SubResource( 9 )
-
-[node name="Right" type="Area2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles"]
-position = Vector2( 706, 7 )
-collision_layer = 128
-collision_mask = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles/Right"]
-position = Vector2( 0, 1 )
-shape = SubResource( 10 )
-
-[node name="Bottom" type="Area2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles"]
-position = Vector2( 18, 567 )
-collision_layer = 128
-collision_mask = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles/Bottom"]
-position = Vector2( -2, 0 )
-shape = SubResource( 11 )
-
-[node name="Left" type="Area2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles"]
-position = Vector2( -654, 15 )
-collision_layer = 128
-collision_mask = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Clouds/CloudRegion/SpawnRectangles/Left"]
-position = Vector2( 0, -7 )
-shape = SubResource( 12 )
 
 [node name="Templates" type="YSort" parent="YSort/Clouds"]
 

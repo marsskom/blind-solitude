@@ -9,11 +9,6 @@ onready var moon: Moon = Moon.new()
 
 
 func _ready():
-	character.call_deferred(
-		"add_child",
-		RemoteTransform2DFactory.create($YSort/Clouds/CloudRegion)
-	)
-
 	character.connect("player_position", $YSort/Clouds, "_on_player_position")
 
 
