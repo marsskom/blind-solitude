@@ -4,44 +4,48 @@ signal state_changed
 
 export(int) var max_history_count: int = 5
 
-var __state: State setget , get_state
-var __history: Array = []
+var _state: State setget set_state, get_state
+var _history: Array = []
 
 
 func _init(state: State) -> void:
-	self.__state = state
-	self.__state.emit_signal("activated")
+	set_state(state)
+	get_state().emit_signal("activated")
+
+
+func set_state(value: State) -> void:
+	_state = value
 
 
 func get_state() -> State:
-	return __state
+	return _state
 
 
 func change(state: State) -> void:
-	if self.__state.get_value() == state.get_value():
+	if get_state().get_value() == state.get_value():
 		return
 
-	self.__append_state(state)
+	_append_state(state)
 
 	emit_signal("state_changed", state)
 
 
 func back() -> bool:
-	if self.__history.size() > 0:
-		self.__append_state(self.__history.pop_back(), true)
+	if _history.size() > 0:
+		_append_state(_history.pop_back(), true)
 		return true
 
 	return false
 
 
-func __append_state(state: State, is_rewind: bool = false) -> void:
-	self.__state.emit_signal("changed")
+func _append_state(state: State, is_rewind: bool = false) -> void:
+	get_state().emit_signal("changed")
 
 	if not is_rewind:
-		self.__history.append(self.__state)
+		_history.append(get_state())
 
-	self.__state = state
-	self.__state.emit_signal("activated")
+	set_state(state)
+	get_state().emit_signal("activated")
 
-	if (self.__history.size() > max_history_count):
-		self.__history.pop_front()
+	if (_history.size() > max_history_count):
+		_history.pop_front()

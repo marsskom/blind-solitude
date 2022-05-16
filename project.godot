@@ -9,25 +9,50 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "YSort",
 "class": "Accessories",
 "language": "GDScript",
 "path": "res://Classes/Characters/Accessories.gd"
-}, {
-"base": "BlockedState",
-"class": "AnimationBlockedState",
-"language": "GDScript",
-"path": "res://Classes/Foundation/States/BlockedStates/AnimationBlockedState.gd"
-}, {
-"base": "State",
-"class": "BlockedState",
-"language": "GDScript",
-"path": "res://Classes/Foundation/States/BlockedState.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
 "path": "res://Classes/Characters/Character.gd"
+}, {
+"base": "Node",
+"class": "CharacterState",
+"language": "GDScript",
+"path": "res://Classes/Characters/CharacterState.gd"
+}, {
+"base": "Sprite",
+"class": "Cloud",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Cloud.gd"
+}, {
+"base": "Reference",
+"class": "CloudFactory",
+"language": "GDScript",
+"path": "res://Classes/Factories/CloudFactory.gd"
+}, {
+"base": "Node",
+"class": "Clouds",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Clouds.gd"
+}, {
+"base": "Reference",
+"class": "Collection",
+"language": "GDScript",
+"path": "res://Classes/Node/Collection.gd"
+}, {
+"base": "Reference",
+"class": "Datetime",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Time/Datetime.gd"
+}, {
+"base": "Reference",
+"class": "Distance",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Measurement/Distance.gd"
 }, {
 "base": "Reference",
 "class": "GutHookScript",
@@ -39,7 +64,47 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gut/test.gd"
 }, {
+"base": "Line2D",
+"class": "Lightning",
+"language": "GDScript",
+"path": "res://Scene/World/Weather/Components/Lightning.gd"
+}, {
+"base": "Node2D",
+"class": "LightningGenerator",
+"language": "GDScript",
+"path": "res://Scene/World/Weather/Components/LightningGenerator.gd"
+}, {
+"base": "Reference",
+"class": "Moon",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Moon.gd"
+}, {
+"base": "Reference",
+"class": "Precipitation",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Precipitation.gd"
+}, {
 "base": "Node",
+"class": "Rain",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Rain.gd"
+}, {
+"base": "Reference",
+"class": "RemoteTransform2DFactory",
+"language": "GDScript",
+"path": "res://Classes/Factories/RemoteTransform2DFactory.gd"
+}, {
+"base": "Node",
+"class": "Snow",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Snow.gd"
+}, {
+"base": "Reference",
+"class": "Speed",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Measurement/Speed.gd"
+}, {
+"base": "Reference",
 "class": "State",
 "language": "GDScript",
 "path": "res://Classes/Foundation/States/State.gd"
@@ -50,11 +115,6 @@ _global_script_classes=[ {
 "path": "res://Classes/Foundation/States/StateMachine.gd"
 }, {
 "base": "Node",
-"class": "StatesCollection",
-"language": "GDScript",
-"path": "res://Classes/Foundation/States/StatesCollection.gd"
-}, {
-"base": "Node",
 "class": "Stuff",
 "language": "GDScript",
 "path": "res://Classes/Stuff/Stuff.gd"
@@ -63,19 +123,43 @@ _global_script_classes=[ {
 "class": "TestCustomState",
 "language": "GDScript",
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
+}, {
+"base": "Reference",
+"class": "UUID",
+"language": "GDScript",
+"path": "res://Autoload/UUID.gd"
+}, {
+"base": "Node",
+"class": "Wind",
+"language": "GDScript",
+"path": "res://Classes/Foundation/Weather/Wind.gd"
 } ]
 _global_script_class_icons={
 "Accessories": "",
-"AnimationBlockedState": "",
-"BlockedState": "",
 "Character": "",
+"CharacterState": "",
+"Cloud": "",
+"CloudFactory": "",
+"Clouds": "",
+"Collection": "",
+"Datetime": "",
+"Distance": "",
 "GutHookScript": "",
 "GutTest": "",
+"Lightning": "",
+"LightningGenerator": "",
+"Moon": "",
+"Precipitation": "",
+"Rain": "",
+"RemoteTransform2DFactory": "",
+"Snow": "",
+"Speed": "",
 "State": "",
 "StateMachine": "",
-"StatesCollection": "",
 "Stuff": "",
-"TestCustomState": ""
+"TestCustomState": "",
+"UUID": "",
+"Wind": ""
 }
 
 [application]
@@ -86,12 +170,17 @@ config/icon="res://icon.png"
 config/macos_native_icon="res://icon.png"
 config/windows_native_icon="res://icon.png"
 
+[autoload]
+
+Log="*res://Autoload/Log.gd"
+TimeSystem="*res://Autoload/TimeSystem.gd"
+
 [display]
 
-window/size/width=640
-window/size/height=480
-window/size/test_width=1920
-window/size/test_height=1080
+window/size/width=568
+window/size/height=320
+window/size/test_width=2272
+window/size/test_height=1280
 window/stretch/mode="2d"
 
 [editor_plugins]
@@ -170,6 +259,8 @@ interaction={
 2d_physics/layer_4="EnemyHurtbox"
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="SoftCollision"
+2d_physics/layer_7="StaticThingsLayer"
+2d_physics/layer_8="CloudsCollision"
 
 [logging]
 
