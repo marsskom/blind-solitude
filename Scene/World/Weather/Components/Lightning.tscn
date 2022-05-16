@@ -1,0 +1,103 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scene/World/Weather/Components/Lightning.gd" type="Script" id=1]
+
+[sub_resource type="Curve" id=13]
+max_value = 3.0
+_data = [ Vector2( 0.0586298, 1.24233 ), 0.0, 0.0, 0, 0, Vector2( 0.071805, 2.78834 ), 0.0, 0.0, 0, 0, Vector2( 0.112648, 0.432515 ), 0.0, 0.0, 0, 0, Vector2( 0.220685, 3 ), 0.0, 0.0, 0, 0, Vector2( 0.22332, 0.230062 ), 0.0, 0.0, 0, 0, Vector2( 0.339262, 2.49387 ), 0.0, 0.0, 0, 0, Vector2( 0.389328, 0.616565 ), 0.0, 0.0, 0, 0, Vector2( 0.571146, 1.55521 ), 0.0, 0.0, 0, 0, Vector2( 0.597497, 2.95399 ), 0.0, 0.0, 0, 0, Vector2( 0.631752, 0.322086 ), 0.0, 0.0, 0, 0, Vector2( 0.821476, 1.59202 ), 0.0, 0.0, 0, 0, Vector2( 0.882082, 0.48773 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=11]
+
+[sub_resource type="Animation" id=10]
+resource_name = "Fade"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:gradient:offsets")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ PoolRealArray( 0, 1 ), PoolRealArray( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:gradient:colors")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1 ), PoolColorArray( 0.729412, 0.956863, 1, 0, 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15, 0.25, 0.35, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.74902, 0.74902, 0.74902, 1 ), Color( 0.878431, 0.870588, 0.870588, 1 ), Color( 0.568627, 0.568627, 0.568627, 1 ), Color( 0.796078, 0.796078, 0.796078, 1 ), Color( 0.772549, 0.772549, 0.772549, 1 ), Color( 0.937255, 0.937255, 0.937255, 1 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:gradient:offsets")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ PoolRealArray( 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:gradient:colors")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 1 ) ]
+}
+
+[node name="Lightning" type="Line2D"]
+width = 1.0
+width_curve = SubResource( 13 )
+gradient = SubResource( 11 )
+sharp_limit = 8.0
+round_precision = 5
+script = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Fade = SubResource( 10 )
+anims/RESET = SubResource( 12 )

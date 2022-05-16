@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scene/Characters/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scene/World/Bioms/Green/Ground.tscn" type="PackedScene" id=2]
@@ -10,8 +10,17 @@
 [ext_resource path="res://Scene/World/Village/Village.gd" type="Script" id=8]
 [ext_resource path="res://Scene/World/Village/Label.gd" type="Script" id=9]
 
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.0
+glow_strength = 1.2
+
 [node name="Village" type="Node2D"]
 script = ExtResource( 8 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 3 )]
 position = Vector2( 197, 175 )
@@ -37,6 +46,27 @@ tile_data = PoolIntArray( -983036, 0, 65536, -983035, 0, 2, -983034, 0, 3, -9830
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="Weather" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 0, -78 )
+character_node = NodePath("../Player")
+
+[node name="Wind" parent="YSort/Weather/YSort" index="1"]
+variability = 3
+
+[node name="Rain" parent="YSort/Weather/YSort" index="3"]
+clouds_count = 200
+rain_duration_minutes = 45
+time_between_rain_minutes = 360
+
+[node name="Snow" parent="YSort/Weather/YSort" index="4"]
+is_enabled = false
+clouds_count = 200
+snow_duration_minutes = 45
+time_between_snow_minutes = 360
+
+[node name="LightningGenerator" parent="YSort/Weather/YSort" index="5"]
+camera_node = NodePath("../../../../Camera2D")
+
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 197, 175 )
 
@@ -55,24 +85,6 @@ position = Vector2( 100, 174 )
 [node name="HighGreenTree4" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 72, 178 )
 
-[node name="Weather" parent="." instance=ExtResource( 6 )]
-position = Vector2( 0, -78 )
-character_node = NodePath("../YSort/Player")
-
-[node name="Wind" parent="Weather/YSort" index="2"]
-variability = 3
-
-[node name="Rain" parent="Weather/YSort" index="4"]
-clouds_count = 200
-rain_duration_minutes = 45
-time_between_rain_minutes = 360
-
-[node name="Snow" parent="Weather/YSort" index="5"]
-is_enabled = false
-clouds_count = 200
-snow_duration_minutes = 45
-time_between_snow_minutes = 360
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -85,8 +97,8 @@ script = ExtResource( 9 )
 character_node = NodePath("../../YSort/Player")
 
 [editable path="Camera2D"]
-[editable path="Weather"]
-[editable path="Weather/YSort/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
-[editable path="Weather/YSort/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]
-[editable path="Weather/YSort/Clouds/Templates/ThirdTemplate/SoftCollisionComponent"]
-[editable path="Weather/YSort/Clouds/Templates/FourthTemplate/SoftCollisionComponent"]
+[editable path="YSort/Weather"]
+[editable path="YSort/Weather/YSort/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
+[editable path="YSort/Weather/YSort/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]
+[editable path="YSort/Weather/YSort/Clouds/Templates/ThirdTemplate/SoftCollisionComponent"]
+[editable path="YSort/Weather/YSort/Clouds/Templates/FourthTemplate/SoftCollisionComponent"]

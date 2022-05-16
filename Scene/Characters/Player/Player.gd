@@ -10,10 +10,11 @@ enum PlayerStates {
 
 onready var accessories: Accessories = $Accessories
 
+
 func _physics_process(delta):
 	emit_signal("player_position", global_position)
 
-	var state: State = stateMachine.get_state()
+	var state: State = _state_machine.get_state()
 
 	match state.get_value():
 		PlayerStates.IDLE:
@@ -21,8 +22,8 @@ func _physics_process(delta):
 		PlayerStates.MOVE:
 			idle_move_state(delta)
 		PlayerStates.PICK_UP:
-			if not state.is_blocked():
-				stateMachine.change(states.get("Idle"))
+			if not state.is_locked():
+				_state_machine.change(_state_collection.get("Idle"))
 
 
 func idle_move_state(delta):
@@ -32,30 +33,33 @@ func idle_move_state(delta):
 	vector = vector.normalized()
 
 	if vector != Vector2.ZERO:
-		last_vector = vector
+		_last_vector = vector
 
-	emit_signal("vector_changed", last_vector)
+	emit_signal("vector_changed", _last_vector)
 
 	if vector != Vector2.ZERO:
-		stateMachine.change(states.get("Move"))
+		_state_machine.change(_state_collection.get("Move"))
 		.move_process(vector, delta)
 	else:
-		stateMachine.change(states.get("Idle"))
+		_state_machine.change(_state_collection.get("Idle"))
 		.idle_process(delta)
 
 
 func _input(_event):
-	var state: State = stateMachine.get_state()
-	if state.is_blocked():
+	var state: State = _state_machine.get_state()
+	if state.is_locked():
 		return
 
 	if Input.is_action_just_pressed("interaction"):
-		state = states.get("PickUp")
+		state = _state_collection.get("PickUp")
 
 	if Input.is_action_just_pressed("ui_select"):
-		accessories.get("PinkSnapBack").visible = not accessories.get("PinkSnapBack").visible
+		accessories.set_visibility(
+			"PinkSnapBack",
+			not accessories.collection().get("PinkSnapBack").visible
+		)
 
 	if null == state:
 		return
 
-	stateMachine.change(state)
+	_state_machine.change(state)

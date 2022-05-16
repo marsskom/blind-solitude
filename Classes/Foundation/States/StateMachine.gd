@@ -12,8 +12,10 @@ func _init(state: State) -> void:
 	set_state(state)
 	get_state().emit_signal("activated")
 
+
 func set_state(value: State) -> void:
 	_state = value
+
 
 func get_state() -> State:
 	return _state
@@ -23,7 +25,7 @@ func change(state: State) -> void:
 	if get_state().get_value() == state.get_value():
 		return
 
-	self._append_state(state)
+	_append_state(state)
 
 	emit_signal("state_changed", state)
 

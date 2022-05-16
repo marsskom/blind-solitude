@@ -1,8 +1,7 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scene/World/Weather/Weather.gd" type="Script" id=1]
 [ext_resource path="res://Scene/World/Weather/Components/DayNightCycle.gd" type="Script" id=2]
-[ext_resource path="res://Scene/World/Bioms/Green/Background.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Classes/Foundation/Weather/Wind.gd" type="Script" id=4]
 [ext_resource path="res://Classes/Foundation/Weather/Clouds.gd" type="Script" id=5]
 [ext_resource path="res://assets/Weather/Clouds/first_cloud.png" type="Texture" id=6]
@@ -15,6 +14,26 @@
 [ext_resource path="res://Classes/Foundation/Weather/Rain.gd" type="Script" id=13]
 [ext_resource path="res://Classes/Foundation/Weather/Snow.gd" type="Script" id=14]
 [ext_resource path="res://assets/Weather/snowflake.png" type="Texture" id=15]
+[ext_resource path="res://Scene/World/Weather/Components/Lightning.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scene/World/Weather/Components/LightningGenerator.gd" type="Script" id=17]
+
+[sub_resource type="Animation" id=11]
+resource_name = "Cloudy"
+length = 24.0
+loop = true
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 5, 7, 13, 19, 21, 23 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.156863, 0.156863, 0.156863, 1 ), Color( 0.196078, 0.196078, 0.196078, 1 ), Color( 0.247059, 0.247059, 0.247059, 1 ), Color( 0.352941, 0.352941, 0.352941, 1 ), Color( 0.490196, 0.490196, 0.490196, 1 ), Color( 0.411765, 0.411765, 0.411765, 1 ), Color( 0.235294, 0.235294, 0.235294, 1 ), Color( 0.207843, 0.207843, 0.207843, 1 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "DayNightCycle"
@@ -113,21 +132,22 @@ angle_random = 1.0
 scale = 0.3
 scale_random = 0.05
 
+[sub_resource type="Curve2D" id=10]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -229.793, -135.245, 0, 0, 0, 0, -229.793, 135.245, 0, 0, 0, 0, 251.678, 135.245, 0, 0, 0, 0, 251.678, -135.245, 0, 0, 0, 0, -229.793, -135.245 )
+}
+
 [node name="Weather" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="YSort" type="YSort" parent="."]
 
-[node name="Background" parent="YSort" instance=ExtResource( 3 )]
-visible = false
-position = Vector2( 153, 212 )
-
 [node name="DayNightCycle" type="CanvasModulate" parent="YSort"]
-visible = false
 color = Color( 0.890196, 0.831373, 0.658824, 1 )
 script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="YSort/DayNightCycle"]
+anims/Cloudy = SubResource( 11 )
 anims/DayNightCycle = SubResource( 1 )
 anims/MoonLight = SubResource( 3 )
 anims/RESET = SubResource( 2 )
@@ -222,6 +242,45 @@ process_material = SubResource( 9 )
 texture = ExtResource( 15 )
 
 [node name="Timer" type="Timer" parent="YSort/Snow"]
+
+[node name="LightningGenerator" type="Node2D" parent="YSort"]
+z_index = 999
+script = ExtResource( 17 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Lightning" parent="YSort/LightningGenerator" instance=ExtResource( 16 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="YSort/LightningGenerator"]
+
+[node name="Flash" type="Control" parent="YSort/LightningGenerator/CanvasLayer"]
+visible = false
+margin_left = -144.0
+margin_top = -32.0
+margin_right = 676.0
+margin_bottom = 448.0
+
+[node name="ColorRect" type="ColorRect" parent="YSort/LightningGenerator/CanvasLayer/Flash"]
+anchor_left = 0.176
+anchor_top = 0.067
+anchor_right = 0.176
+anchor_bottom = 0.067
+margin_left = -144.32
+margin_top = -32.16
+margin_right = 675.68
+margin_bottom = 447.84
+
+[node name="Timer" type="Timer" parent="YSort/LightningGenerator"]
+
+[node name="Path2D" type="Path2D" parent="YSort/LightningGenerator"]
+position = Vector2( 267.091, 168 )
+scale = Vector2( 0.0830786, 0.177455 )
+curve = SubResource( 10 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="YSort/LightningGenerator/Path2D"]
+position = Vector2( -229.793, -135.245 )
+rotation = 1.5708
 
 [connection signal="day_night_animation_changed" from="." to="YSort/DayNightCycle" method="_on_Weather_day_night_animation_changed"]
 

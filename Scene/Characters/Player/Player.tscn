@@ -1,10 +1,8 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://assets/Player/player-sprite.png" type="Texture" id=1]
 [ext_resource path="res://Scene/Characters/Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://Classes/Foundation/States/State.gd" type="Script" id=3]
-[ext_resource path="res://Classes/Foundation/States/StatesCollection.gd" type="Script" id=4]
-[ext_resource path="res://Classes/Foundation/States/BlockedStates/AnimationBlockedState.gd" type="Script" id=5]
+[ext_resource path="res://Classes/Characters/CharacterState.gd" type="Script" id=3]
 [ext_resource path="res://Scene/Stuff/Clothes/Hats/PinkSnapBack.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Classes/Characters/Accessories.gd" type="Script" id=7]
 [ext_resource path="res://Scene/Characters/Areas/Hurtbox.tscn" type="PackedScene" id=8]
@@ -399,7 +397,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-states_collection_node = NodePath("States")
+states_node_path = NodePath("States")
 
 [node name="PlayerSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -446,7 +444,6 @@ position = Vector2( 1, -16 )
 shape = SubResource( 50 )
 
 [node name="States" type="Node" parent="."]
-script = ExtResource( 4 )
 
 [node name="Idle" type="Node" parent="States"]
 script = ExtResource( 3 )
@@ -461,13 +458,14 @@ animation_name = "Move"
 state_value = 1
 
 [node name="PickUp" type="Node" parent="States"]
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 animation_tree_node = NodePath("../../AnimationTree")
 character_node = NodePath("../..")
 animation_name = "PickUp"
 state_value = 2
+is_lockable = true
 
-[node name="Accessories" type="Node" parent="."]
+[node name="Accessories" type="YSort" parent="."]
 script = ExtResource( 7 )
 character_node = NodePath("..")
 

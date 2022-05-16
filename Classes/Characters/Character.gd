@@ -8,18 +8,21 @@ export(int) var ACCELERATION: int = 500
 export(int) var MAX_SPEED: int = 80
 export(int) var FRICTION: int = 500
 
-export(NodePath) var states_collection_node: NodePath
+export(NodePath) var states_node_path: NodePath
+onready var states_node = get_node(states_node_path)
 
-var stateMachine: StateMachine
-var velocity: Vector2 = Vector2.DOWN setget set_velocity, get_velocity
-var last_vector: Vector2 = Vector2.DOWN
-
-onready var states: StatesCollection = get_node(states_collection_node) as StatesCollection
-
+var _state_collection: Collection
+var _state_machine: StateMachine
+var _velocity: Vector2 = Vector2.DOWN setget set_velocity, get_velocity
+var _last_vector: Vector2 = Vector2.DOWN
 
 func _ready():
-	stateMachine = StateMachine.new(states.get("Idle"))
-	stateMachine.connect("state_changed", self, "_on_state_chaged")
+	_state_collection = Collection.new([])
+	for state in states_node.get_children():
+		_state_collection.append(state.name, state.get_state())
+
+	_state_machine = StateMachine.new(_state_collection.get("Idle"))
+	_state_machine.connect("state_changed", self, "_on_state_chaged")
 
 
 func _on_state_chaged(state: State):
@@ -27,16 +30,16 @@ func _on_state_chaged(state: State):
 
 
 func set_velocity(value: Vector2) -> void:
-	velocity = value
+	_velocity = value
 
 
 func get_velocity() -> Vector2:
-	return velocity
+	return _velocity
 
 
 func idle_process(delta) -> void:
 	set_velocity(
-		get_velocity().move_toward(last_vector, FRICTION * delta)
+		get_velocity().move_toward(_last_vector, FRICTION * delta)
 	)
 
 

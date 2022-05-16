@@ -1,54 +1,60 @@
-extends Node
 class_name State
 
 signal activated
 signal changed
 
-export(NodePath) var animation_tree_node: NodePath
-export(NodePath) var character_node: NodePath
-export(String) var animation_name: String = "Idle" setget , get_name
-export(int) var state_value: int = 0 setget , get_value
+var name: String setget , get_name
+var value: int setget , get_value
+var is_lockable: bool setget , is_lockable
 
-var has_blocked: bool = false setget block, is_blocked
+var _is_locked: bool = false
 
-onready var animation_tree: AnimationTree = get_node(animation_tree_node) as AnimationTree
-onready var animation_state = animation_tree.get("parameters/playback")
-
-onready var character: Node2D  = get_node(character_node) as Node2D
-
-
-func _ready():
-	animation_tree.set("parameters/Idle/blend_position", Vector2.DOWN)
+func _init(name: String, value: int, is_lockable: bool = false):
+	self.name = name
+	self.value = value
+	self.is_lockable = is_lockable
 
 	self.connect("activated", self, "_on_activated")
 	self.connect("changed", self, "_on_changed")
 
-	character.connect("vector_changed", self, "_on_vector_changed")
-
 
 func get_name() -> String:
-	return animation_name
+	return name
 
 
 func get_value() -> int:
-	return state_value
+	return value
 
 
-func block(value: bool) -> void:
-	has_blocked = value
+func is_lockable() -> bool:
+	return is_lockable
 
 
-func is_blocked() -> bool:
-	return has_blocked
+func lock() -> void:
+	if not is_lockable():
+		Log.error("Status '%s' is not lockable" % get_name())
+		return
+
+	_is_locked = true
 
 
-func _on_vector_changed(vector: Vector2) -> void:
-	animation_tree.set("parameters/%s/blend_position" % animation_name, vector)
+func unlock() -> void:
+	if not is_lockable():
+		Log.error("Status '%s' is not lockable" % get_name())
+		return
+
+	_is_locked = false
+
+
+func is_locked() -> bool:
+	return _is_locked
 
 
 func _on_activated():
-	animation_state.travel(animation_name)
+	if is_lockable():
+		lock()
 
 
 func _on_changed():
-	animation_state.stop()
+	if is_lockable():
+		unlock()
