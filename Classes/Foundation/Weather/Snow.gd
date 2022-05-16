@@ -1,105 +1,79 @@
 extends Node
 class_name Snow
 
-export(NodePath) var clouds_node: NodePath
-onready var clouds: Clouds = get_node(clouds_node) as Clouds
+signal increase_max_clouds_to
+signal precipitation_begin
+signal precipitation_ended
 
-export(bool) var is_enabled: bool = true
+export(bool) var is_active: bool = false
 export(int) var clouds_count: int = 100
 export(int) var snow_duration_minutes: int = 30
 export(int) var time_between_snow_minutes: int = 90
 
-var _default_max_clouds_count: int
-var _is_snowing: bool = false
-var _last_snow_started: float = 0.0
-var _last_snow_finished: float = 0.0
-# Contains info about was snowing or not: 1 - was, 0 - not
-var _snowing_data_array: Array = [1, 0, 0, 0, 1, 1, 0, 0, 1, 0]
-var _snowing_data_max_size: int = 20
+onready var timer: Timer = $Timer
+onready var particles: Particles2D = $Particles2D
 
-onready var rand_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+var _precipitation: Precipitation
+var _is_enabled: bool setget set_enabled, get_enabled
+var _can_emit_state: bool = true
 
 
 func _ready():
-	_default_max_clouds_count = clouds.max_clouds_count
+	_is_enabled = is_active
 
-	$Timer.connect("timeout", self, "_on_timer_timeout")
+	_precipitation = Precipitation.new(
+		snow_duration_minutes,
+		time_between_snow_minutes,
+		[1, 0, 0, 0, 1, 1, 0, 0, 1, 0]
+	)
+	_precipitation.connect("precipitation_started", self, "_on_snow_started")
+	_precipitation.connect("precipitation_stopped", self, "_on_snow_stopped")
+
+	timer.connect("timeout", self, "_on_timer_timeout")
+
+
+func set_enabled(value: bool) -> void:
+	_is_enabled = value
+
+
+func get_enabled() -> bool:
+	return _is_enabled
+
+
+func get_precipitation() -> Precipitation:
+	return _precipitation
 
 
 func _physics_process(delta):
-	if not is_enabled:
+	if get_enabled():
+		get_precipitation().common_process()
+
+
+func _on_snow_started() -> void:
+	if not _can_emit_state:
 		return
 
-	if need_snow():
-		start_snow()
+	emit_signal("precipitation_begin", "Snow")
+	emit_signal("increase_max_clouds_to", clouds_count)
 
-	if _is_snowing:
-		check_and_stop_snow()
-
-
-func need_snow() -> bool:
-	if _is_snowing:
-		return false
-
-	var diff_real_seconds: float = TimeSystem.get_diff(_last_snow_finished)
-	var diff_seconds: float = TimeSystem.to_seconds(TimeSystem.get_datetime(diff_real_seconds))
-
-	if diff_seconds <= time_between_snow_minutes * TimeSystem.get_seconds_in_minutes():
-		return false
-
-	var probability: float = snow_probability()
-	if probability >= 0.75:
-		add_snow_note(1)
-		return true
-
-	add_snow_note(0)
-	return false
+	timer.start(5)
 
 
-func snow_probability() -> float:
-	var probability: float = 0.0
-	if _snowing_data_array.size() > 0:
-		probability = _snowing_data_array.count(1) / _snowing_data_array.size()
+func _on_snow_stopped() -> void:
+	particles.emitting = false
 
-	randomize()
-	var god_hand: float = rand_generator.randfn()
-
-	return probability + god_hand
-
-
-func add_snow_note(value: int) -> void:
-	if _snowing_data_array.size() >= _snowing_data_max_size:
-		_snowing_data_array.pop_front()
-
-	_snowing_data_array.append(value)
-
-
-func start_snow() -> void:
-	clouds.max_clouds_count = clouds_count
-	clouds.create_max_clouds()
-	$Timer.start(5)
-
-	_is_snowing = true
-	_last_snow_started = TimeSystem.get_value()
-
-
-func check_and_stop_snow() -> void:
-	var diff_real_seconds = TimeSystem.get_diff(_last_snow_started)
-	var diff_seconds = TimeSystem.to_seconds(TimeSystem.get_datetime(diff_real_seconds))
-
-	if diff_seconds > snow_duration_minutes * TimeSystem.get_seconds_in_minutes():
-		$Particles2D.emitting = false
-		clouds.max_clouds_count = _default_max_clouds_count
-
-		_is_snowing = false
-		_last_snow_finished = TimeSystem.get_value()
+	emit_signal("precipitation_ended", "Snow")
 
 
 func _on_timer_timeout() -> void:
-	$Particles2D.emitting = true
-	$Timer.stop()
+	particles.emitting = true
+	timer.stop()
 
 
 func _on_player_position(player_position: Vector2) -> void:
 	var position = player_position + (Vector2.UP * 250)
-	$Particles2D.position = position
+	particles.position = position
+
+
+func _on_state_avail_for_changes(is_available: bool) -> void:
+	_can_emit_state = is_available

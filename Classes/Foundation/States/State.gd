@@ -32,7 +32,7 @@ func is_lockable() -> bool:
 
 func lock() -> void:
 	if not is_lockable():
-		Log.error("Status '%s' is not lockable" % get_name())
+		Log.warning("Status '%s' is not lockable" % get_name())
 		return
 
 	_is_locked = true
@@ -40,7 +40,7 @@ func lock() -> void:
 
 func unlock() -> void:
 	if not is_lockable():
-		Log.error("Status '%s' is not lockable" % get_name())
+		Log.warning("Status '%s' is not lockable" % get_name())
 		return
 
 	_is_locked = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scene/World/Weather/Weather.gd" type="Script" id=1]
 [ext_resource path="res://Scene/World/Weather/Components/DayNightCycle.gd" type="Script" id=2]
@@ -16,24 +16,6 @@
 [ext_resource path="res://assets/Weather/snowflake.png" type="Texture" id=15]
 [ext_resource path="res://Scene/World/Weather/Components/Lightning.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scene/World/Weather/Components/LightningGenerator.gd" type="Script" id=17]
-
-[sub_resource type="Animation" id=11]
-resource_name = "Cloudy"
-length = 24.0
-loop = true
-step = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 3, 5, 7, 13, 19, 21, 23 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 0.156863, 0.156863, 0.156863, 1 ), Color( 0.196078, 0.196078, 0.196078, 1 ), Color( 0.247059, 0.247059, 0.247059, 1 ), Color( 0.352941, 0.352941, 0.352941, 1 ), Color( 0.490196, 0.490196, 0.490196, 1 ), Color( 0.411765, 0.411765, 0.411765, 1 ), Color( 0.235294, 0.235294, 0.235294, 1 ), Color( 0.207843, 0.207843, 0.207843, 1 ) ]
-}
 
 [sub_resource type="Animation" id=1]
 resource_name = "DayNightCycle"
@@ -114,7 +96,8 @@ tangential_accel = 10.0
 tangential_accel_random = 0.2
 angle = 10.0
 angle_random = 0.3
-scale = 0.05
+scale = 0.02
+scale_random = 0.01
 color = Color( 0.678431, 0.772549, 1, 1 )
 
 [sub_resource type="ParticlesMaterial" id=9]
@@ -129,8 +112,8 @@ tangential_accel = -10.0
 tangential_accel_random = 0.3
 angle = 10.0
 angle_random = 1.0
-scale = 0.3
-scale_random = 0.05
+scale = 0.05
+scale_random = 0.1
 
 [sub_resource type="Curve2D" id=10]
 _data = {
@@ -140,86 +123,84 @@ _data = {
 [node name="Weather" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="YSort" type="YSort" parent="."]
+[node name="Components" type="YSort" parent="."]
 
-[node name="DayNightCycle" type="CanvasModulate" parent="YSort"]
+[node name="DayNightCycle" type="CanvasModulate" parent="Components"]
 color = Color( 0.890196, 0.831373, 0.658824, 1 )
 script = ExtResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="YSort/DayNightCycle"]
-anims/Cloudy = SubResource( 11 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Components/DayNightCycle"]
 anims/DayNightCycle = SubResource( 1 )
 anims/MoonLight = SubResource( 3 )
 anims/RESET = SubResource( 2 )
 
-[node name="Wind" type="Node" parent="YSort"]
+[node name="Wind" type="Node" parent="Components"]
 script = ExtResource( 4 )
 
-[node name="Clouds" type="Node" parent="YSort"]
+[node name="Clouds" type="Node" parent="Components"]
 script = ExtResource( 5 )
 wind_node = NodePath("../Wind")
 
-[node name="Templates" type="YSort" parent="YSort/Clouds"]
+[node name="Templates" type="YSort" parent="Components/Clouds"]
 
-[node name="FirstTemplate" type="Sprite" parent="YSort/Clouds/Templates"]
+[node name="FirstTemplate" type="Sprite" parent="Components/Clouds/Templates"]
 visible = false
 texture = ExtResource( 6 )
 script = ExtResource( 11 )
 
-[node name="SoftCollisionComponent" parent="YSort/Clouds/Templates/FirstTemplate" instance=ExtResource( 7 )]
+[node name="SoftCollisionComponent" parent="Components/Clouds/Templates/FirstTemplate" instance=ExtResource( 7 )]
 collision_layer = 128
 collision_mask = 128
 
-[node name="CollisionShape2D" parent="YSort/Clouds/Templates/FirstTemplate/SoftCollisionComponent" index="0"]
+[node name="CollisionShape2D" parent="Components/Clouds/Templates/FirstTemplate/SoftCollisionComponent" index="0"]
 rotation = -1.5708
 shape = SubResource( 4 )
 
-[node name="SecondTemplate" type="Sprite" parent="YSort/Clouds/Templates"]
+[node name="SecondTemplate" type="Sprite" parent="Components/Clouds/Templates"]
 visible = false
 texture = ExtResource( 8 )
 script = ExtResource( 11 )
 
-[node name="SoftCollisionComponent" parent="YSort/Clouds/Templates/SecondTemplate" instance=ExtResource( 7 )]
+[node name="SoftCollisionComponent" parent="Components/Clouds/Templates/SecondTemplate" instance=ExtResource( 7 )]
 collision_layer = 128
 collision_mask = 128
 
-[node name="CollisionShape2D" parent="YSort/Clouds/Templates/SecondTemplate/SoftCollisionComponent" index="0"]
+[node name="CollisionShape2D" parent="Components/Clouds/Templates/SecondTemplate/SoftCollisionComponent" index="0"]
 rotation = -1.5708
 shape = SubResource( 5 )
 
-[node name="ThirdTemplate" type="Sprite" parent="YSort/Clouds/Templates"]
+[node name="ThirdTemplate" type="Sprite" parent="Components/Clouds/Templates"]
 visible = false
 texture = ExtResource( 9 )
 script = ExtResource( 11 )
 
-[node name="SoftCollisionComponent" parent="YSort/Clouds/Templates/ThirdTemplate" instance=ExtResource( 7 )]
+[node name="SoftCollisionComponent" parent="Components/Clouds/Templates/ThirdTemplate" instance=ExtResource( 7 )]
 collision_layer = 128
 collision_mask = 128
 
-[node name="CollisionShape2D" parent="YSort/Clouds/Templates/ThirdTemplate/SoftCollisionComponent" index="0"]
+[node name="CollisionShape2D" parent="Components/Clouds/Templates/ThirdTemplate/SoftCollisionComponent" index="0"]
 position = Vector2( -11, 4 )
 rotation = -1.5708
 shape = SubResource( 6 )
 
-[node name="FourthTemplate" type="Sprite" parent="YSort/Clouds/Templates"]
+[node name="FourthTemplate" type="Sprite" parent="Components/Clouds/Templates"]
 visible = false
 texture = ExtResource( 10 )
 script = ExtResource( 11 )
 
-[node name="SoftCollisionComponent" parent="YSort/Clouds/Templates/FourthTemplate" instance=ExtResource( 7 )]
+[node name="SoftCollisionComponent" parent="Components/Clouds/Templates/FourthTemplate" instance=ExtResource( 7 )]
 collision_layer = 128
 collision_mask = 128
 
-[node name="CollisionShape2D" parent="YSort/Clouds/Templates/FourthTemplate/SoftCollisionComponent" index="0"]
+[node name="CollisionShape2D" parent="Components/Clouds/Templates/FourthTemplate/SoftCollisionComponent" index="0"]
 position = Vector2( -8, 5 )
 rotation = -1.5708
 shape = SubResource( 7 )
 
-[node name="Rain" type="Node" parent="YSort"]
+[node name="Rain" type="Node" parent="Components"]
 script = ExtResource( 13 )
-clouds_node = NodePath("../Clouds")
 
-[node name="Particles2D" type="Particles2D" parent="YSort/Rain"]
+[node name="Particles2D" type="Particles2D" parent="Components/Rain"]
 position = Vector2( 220, -50 )
 emitting = false
 amount = 1000
@@ -227,13 +208,12 @@ lifetime = 4.0
 process_material = SubResource( 8 )
 texture = ExtResource( 12 )
 
-[node name="Timer" type="Timer" parent="YSort/Rain"]
+[node name="Timer" type="Timer" parent="Components/Rain"]
 
-[node name="Snow" type="Node" parent="YSort"]
+[node name="Snow" type="Node" parent="Components"]
 script = ExtResource( 14 )
-clouds_node = NodePath("../Clouds")
 
-[node name="Particles2D" type="Particles2D" parent="YSort/Snow"]
+[node name="Particles2D" type="Particles2D" parent="Components/Snow"]
 position = Vector2( 250, -50 )
 emitting = false
 amount = 1000
@@ -241,27 +221,27 @@ lifetime = 4.0
 process_material = SubResource( 9 )
 texture = ExtResource( 15 )
 
-[node name="Timer" type="Timer" parent="YSort/Snow"]
+[node name="Timer" type="Timer" parent="Components/Snow"]
 
-[node name="LightningGenerator" type="Node2D" parent="YSort"]
+[node name="LightningGenerator" type="Node2D" parent="Components"]
 z_index = 999
 script = ExtResource( 17 )
 __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Lightning" parent="YSort/LightningGenerator" instance=ExtResource( 16 )]
+[node name="Lightning" parent="Components/LightningGenerator" instance=ExtResource( 16 )]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="YSort/LightningGenerator"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Components/LightningGenerator"]
 
-[node name="Flash" type="Control" parent="YSort/LightningGenerator/CanvasLayer"]
+[node name="Flash" type="Control" parent="Components/LightningGenerator/CanvasLayer"]
 visible = false
 margin_left = -144.0
 margin_top = -32.0
 margin_right = 676.0
 margin_bottom = 448.0
 
-[node name="ColorRect" type="ColorRect" parent="YSort/LightningGenerator/CanvasLayer/Flash"]
+[node name="ColorRect" type="ColorRect" parent="Components/LightningGenerator/CanvasLayer/Flash"]
 anchor_left = 0.176
 anchor_top = 0.067
 anchor_right = 0.176
@@ -271,20 +251,20 @@ margin_top = -32.16
 margin_right = 675.68
 margin_bottom = 447.84
 
-[node name="Timer" type="Timer" parent="YSort/LightningGenerator"]
+[node name="Timer" type="Timer" parent="Components/LightningGenerator"]
 
-[node name="Path2D" type="Path2D" parent="YSort/LightningGenerator"]
+[node name="Path2D" type="Path2D" parent="Components/LightningGenerator"]
 position = Vector2( 267.091, 168 )
 scale = Vector2( 0.0830786, 0.177455 )
 curve = SubResource( 10 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="YSort/LightningGenerator/Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Components/LightningGenerator/Path2D"]
 position = Vector2( -229.793, -135.245 )
 rotation = 1.5708
 
-[connection signal="day_night_animation_changed" from="." to="YSort/DayNightCycle" method="_on_Weather_day_night_animation_changed"]
+[connection signal="day_night_animation_changed" from="." to="Components/DayNightCycle" method="_on_Weather_day_night_animation_changed"]
 
-[editable path="YSort/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
-[editable path="YSort/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]
-[editable path="YSort/Clouds/Templates/ThirdTemplate/SoftCollisionComponent"]
-[editable path="YSort/Clouds/Templates/FourthTemplate/SoftCollisionComponent"]
+[editable path="Components/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
+[editable path="Components/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]
+[editable path="Components/Clouds/Templates/ThirdTemplate/SoftCollisionComponent"]
+[editable path="Components/Clouds/Templates/FourthTemplate/SoftCollisionComponent"]

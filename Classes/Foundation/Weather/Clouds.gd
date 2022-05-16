@@ -13,6 +13,7 @@ var _templates: Array = []
 var _speed_model: Speed
 var _player_position: Vector2 = Vector2.ZERO
 var _clouds_count: int = 0
+var _default_max_clouds_count = max_clouds_count
 
 onready var rand_generator: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -28,6 +29,11 @@ func _ready():
 	create_max_clouds()
 
 	wind.connect("wind_blow", self, "_on_wind_blow")
+
+
+func set_max_clouds(max_clouds_count: int) -> void:
+	self.max_clouds_count = max_clouds_count
+	create_max_clouds()
 
 
 func create_max_clouds() -> void:
@@ -73,5 +79,4 @@ func _on_player_position(player_position: Vector2) -> void:
 
 func _on_cloud_vanished() -> void:
 	_clouds_count -= 1
-
 	_make_cloud()

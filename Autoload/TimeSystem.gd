@@ -85,3 +85,10 @@ func to_seconds(datetime: Datetime) -> float:
 		+ (datetime.get_hours() * min_multiply_seconds)
 		+ (datetime.get_minutes() * get_seconds_in_minutes())
 	)
+
+
+func is_day_time() -> bool:
+	var datetime: Datetime = get_current_datetime()
+	var hours = datetime.get_hours()
+
+	return hours >= 6 and hours <= 22

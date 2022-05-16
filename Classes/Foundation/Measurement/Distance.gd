@@ -16,3 +16,9 @@ func kilometters_to_points(kilometters: float) -> float:
 # for instance, from result of Vector2.distance_to
 func convert_distance(distance: float) -> float:
 	return ("%.2f" % (distance / _one_metter)) as float
+
+
+# Returns radius distance what may be saw by player
+# Calculates from player position
+static func active_world_radius_points() -> int:
+	return 1000

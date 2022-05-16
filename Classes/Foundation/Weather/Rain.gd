@@ -1,105 +1,86 @@
 extends Node
 class_name Rain
 
-export(NodePath) var clouds_node: NodePath
-onready var clouds: Clouds = get_node(clouds_node) as Clouds
+signal increase_max_clouds_to
+signal enable_lightning
+signal disable_lightning
+signal precipitation_begin
+signal precipitation_ended
 
-export(bool) var is_enabled: bool = true
+export(bool) var is_active: bool = true
 export(int) var clouds_count: int = 100
 export(int) var rain_duration_minutes: int = 30
 export(int) var time_between_rain_minutes: int = 90
 
-var _default_max_clouds_count: int
-var _is_raining: bool = false
-var _last_rain_started: float = 0.0
-var _last_rain_finished: float = 0.0
-# Contains info about was raining or not: 1 - was, 0 - not
-var _raining_data_array: Array = [0, 1, 0, 0, 0, 1, 0, 0, 0, 0]
-var _raining_data_max_size: int = 20
+onready var timer: Timer = $Timer
+onready var particles: Particles2D = $Particles2D
 
-onready var rand_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+var _precipitation: Precipitation setget , get_precipitation
+var _is_enabled: bool setget set_enabled, get_enabled
+var _can_emit_state: bool = true
 
 
 func _ready():
-	_default_max_clouds_count = clouds.max_clouds_count
+	_is_enabled = is_active
 
-	$Timer.connect("timeout", self, "_on_timer_timeout")
+	_precipitation = Precipitation.new(
+		rain_duration_minutes,
+		time_between_rain_minutes,
+		[0, 1, 0, 0, 0, 1, 0, 0, 0, 0]
+	)
+	_precipitation.connect("precipitation_started", self, "_on_rain_started")
+	_precipitation.connect("precipitation_stopped", self, "_on_rain_stopped")
+
+	timer.connect("timeout", self, "_on_timer_timeout")
+
+
+func set_enabled(value: bool) -> void:
+	_is_enabled = value
+
+
+func get_enabled() -> bool:
+	return _is_enabled
+
+
+func get_precipitation() -> Precipitation:
+	return _precipitation
 
 
 func _physics_process(delta):
-	if not is_enabled:
+	if get_enabled():
+		get_precipitation().common_process()
+
+
+func _on_rain_started() -> void:
+	if not _can_emit_state:
 		return
 
-	if need_rain():
-		start_rain()
-
-	if _is_raining:
-		check_and_stop_rain()
-
-
-func need_rain() -> bool:
-	if _is_raining:
-		return false
-
-	var diff_real_seconds: float = TimeSystem.get_diff(_last_rain_finished)
-	var diff_seconds: float = TimeSystem.to_seconds(TimeSystem.get_datetime(diff_real_seconds))
-
-	if diff_seconds <= time_between_rain_minutes * TimeSystem.get_seconds_in_minutes():
-		return false
-
-	var probability: float = rain_probability()
-	if probability >= 0.75:
-		add_rain_note(1)
-		return true
-
-	add_rain_note(0)
-	return false
-
-
-func rain_probability() -> float:
-	var probability: float = 0.0
-	if _raining_data_array.size() > 0:
-		probability = _raining_data_array.count(1) / _raining_data_array.size()
+	emit_signal("precipitation_begin", "Rain")
+	emit_signal("increase_max_clouds_to", clouds_count)
 
 	randomize()
-	var god_hand: float = rand_generator.randfn()
+	if (randi() % 11) % 2 == 0:
+		emit_signal("enable_lightning")
 
-	return probability + god_hand
-
-
-func add_rain_note(value: int) -> void:
-	if _raining_data_array.size() >= _raining_data_max_size:
-		_raining_data_array.pop_front()
-
-	_raining_data_array.append(value)
+	timer.start(5)
 
 
-func start_rain() -> void:
-	clouds.max_clouds_count = clouds_count
-	clouds.create_max_clouds()
-	$Timer.start(5)
+func _on_rain_stopped() -> void:
+	particles.emitting = false
 
-	_is_raining = true
-	_last_rain_started = TimeSystem.get_value()
-
-
-func check_and_stop_rain() -> void:
-	var diff_real_seconds = TimeSystem.get_diff(_last_rain_started)
-	var diff_seconds = TimeSystem.to_seconds(TimeSystem.get_datetime(diff_real_seconds))
-
-	if diff_seconds > rain_duration_minutes * TimeSystem.get_seconds_in_minutes():
-		$Particles2D.emitting = false
-		clouds.max_clouds_count = _default_max_clouds_count
-
-		_is_raining = false
-		_last_rain_finished = TimeSystem.get_value()
+	emit_signal("disable_lightning")
+	emit_signal("precipitation_ended", "Rain")
 
 
 func _on_timer_timeout() -> void:
-	$Particles2D.emitting = true
-	$Timer.stop()
+	particles.emitting = true
+	timer.stop()
 
 
 func _on_player_position(player_position: Vector2) -> void:
 	var position = player_position + (Vector2.UP * 250)
-	$Particles2D.position = position
+	particles.position = position
+
+
+func _on_state_avail_for_changes(is_available: bool) -> void:
+	_can_emit_state = is_available

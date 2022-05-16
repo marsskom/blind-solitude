@@ -4,11 +4,8 @@ class_name LightningGenerator
 
 signal lightning_flashed
 
-export(bool) var is_enabled: bool = true
+export(bool) var is_active: bool = true
 export(bool) var has_sub_forks: bool = true
-
-export(NodePath) var camera_node: NodePath
-onready var camera: Camera2D  = get_node(camera_node) as Camera2D
 
 var _forks_array: Array = []
 var _fork_count: int = 1
@@ -18,32 +15,49 @@ var _fork_offset: int = 300
 var _length_offset: float = 1
 
 onready var rand_generator: RandomNumberGenerator = RandomNumberGenerator.new()
-
 onready var lightning_scene: PackedScene = preload("res://Scene/World/Weather/Components/Lightning.tscn")
 onready var flash: Control = $CanvasLayer/Flash
 onready var timer: Timer = $Timer
 onready var path_follow: PathFollow2D = $Path2D/PathFollow2D
 
+var _is_enabled: bool setget set_enabled, get_enabled
+
 
 func _ready():
+	_is_enabled = is_active
+
 	randomize()
 
 	timer.connect("timeout", self, "_on_timer_timeout")
-	timer.start(10)
+
+	if _is_enabled:
+		timer.start(10)
 
 
-func _process(_delta):
-	if not is_enabled:
-		timer.stop()
+func set_enabled(value: bool) -> void:
+	_is_enabled = value
+
+	if null != timer:
+		if _is_enabled:
+			timer.start(10)
+		else:
+			timer.stop()
+
+
+func get_enabled() -> bool:
+	return _is_enabled
 
 
 func _on_timer_timeout() -> void:
+	if not get_enabled():
+		return
+
 	path_follow.offset = randi()
 	var start = path_follow.position
 
 	create(start, start * 6.66)
 
-	timer.start(randi() % 9 + 1)
+	timer.start(randi() % 10 + 1)
 
 
 func create(start_position: Vector2, target_position: Vector2):
@@ -54,7 +68,7 @@ func create(start_position: Vector2, target_position: Vector2):
 	var from: Vector2
 
 	for fork in range(0, _fork_count):
-		var lightning_instance: Lightning = lightning_scene.instance()
+		var lightning_instance = lightning_scene.instance()
 
 		if fork == 0:
 			target = start_position
@@ -77,7 +91,7 @@ func create(start_position: Vector2, target_position: Vector2):
 		if _sub_fork_count > 0:
 			for sub_fork in range(0, _sub_fork_count):
 				var index: int = rand_range(0, _forks_array.size() - 1) as int
-				var picked_fork: Lightning = _forks_array[index]
+				var picked_fork = _forks_array[index]
 				var rand_point: int = rand_range(0, picked_fork.get_point_count() - 1) as int
 
 				_forked(
@@ -90,7 +104,7 @@ func create(start_position: Vector2, target_position: Vector2):
 
 
 func _forked(target: Vector2, normalized: Vector2, point: Vector2) -> void:
-	var lightning_instance: Lightning = lightning_scene.instance()
+	var lightning_instance = lightning_scene.instance()
 	var rand = rand_range(-_sub_fork_length, _sub_fork_length)
 	var fork_target: Vector2 = (point + normalized * rand) + (target / 4) * randf()
 	var fork_from = fork_target - point
@@ -100,7 +114,7 @@ func _forked(target: Vector2, normalized: Vector2, point: Vector2) -> void:
 
 
 func _blink(
-	lightning_instance: Lightning,
+	lightning_instance,
 	start_point: Vector2,
 	target: Vector2,
 	from: Vector2,
@@ -116,7 +130,7 @@ func _blink(
 	_frame(lightning_instance)
 
 
-func _frame(lightning_instance: Lightning) -> void:
+func _frame(lightning_instance) -> void:
 	yield(get_tree(), "idle_frame")
 	lightning_instance.animation_player.play("Fade")
 

@@ -3,7 +3,7 @@ class_name Cloud
 
 signal cloud_vanished
 
-export(int) var max_distance_from_player: int = 1200
+export(int) var max_distance_from_player: int = Distance.active_world_radius_points()
 
 onready var soft_collision = $SoftCollisionComponent
 
@@ -15,19 +15,12 @@ func _physics_process(delta):
 		return
 
 	if soft_collision.is_colliding():
-		position = lerp(
-			position,
-			position + soft_collision.get_push_vector(),
-			delta * 10
-		)
+		var push_vector = position + soft_collision.get_push_vector();
+		position = lerp(position, push_vector, delta * 10)
 
 
 func _on_follow_wind(direction: Vector2, weight: float) -> void:
-	position = lerp(
-		position,
-		position + direction,
-		weight
-	)
+	position = lerp(position, position + direction, weight)
 
 
 func _on_player_position(player_position: Vector2) -> void:

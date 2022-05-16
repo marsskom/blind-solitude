@@ -3,6 +3,8 @@ class_name Wind
 
 signal wind_blow
 
+export(bool) var is_active: bool = true
+
 # Wind average speed in kilometers (real kilometers)
 export(float) var speed: float = 10.0
 # Wind speed on time in hours (real hours)
@@ -16,17 +18,24 @@ var _distance: Distance
 
 var _previous_speed: float = 0.0
 var _speed_direction: int = 1
-var _min_speed_limit: float = speed - 10
-var _max_speed_limit: float = speed + 10
+var _min_speed_limit: float = speed - 5
+var _max_speed_limit: float = speed + 5
 
 
 func _ready():
 	_distance = Distance.new()
 
-	create()
+	if _min_speed_limit < 1:
+		_min_speed_limit = 1
+
+	if is_active:
+		create()
 
 
 func _process(delta):
+	if not is_active:
+		return
+
 	if need_change():
 		create()
 
@@ -49,18 +58,11 @@ func create():
 
 
 func _update_direction() -> void:
-	var cases: Array = []
-	match get_direction():
-		Vector2.LEFT:
-			cases = [Vector2.UP, Vector2.DOWN]
-		Vector2.UP:
-			cases = [Vector2.LEFT, Vector2.DOWN]
-		Vector2.RIGHT:
-			cases = [Vector2.UP, Vector2.DOWN]
-		Vector2.DOWN:
-			cases = [Vector2.LEFT, Vector2.RIGHT]
-		_:
-			cases = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+	var cases: Array = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+	if get_direction() == Vector2.LEFT or get_direction() == Vector2.RIGHT:
+		cases = [Vector2.UP, Vector2.DOWN]
+	elif get_direction() == Vector2.UP or get_direction() == Vector2.DOWN:
+		cases = [Vector2.LEFT, Vector2.DOWN]
 
 	cases.shuffle()
 	randomize()
@@ -70,27 +72,12 @@ func _update_direction() -> void:
 
 
 func _update_speed() -> void:
-	if abs(speed - _previous_speed) <= 5:
-		speed += _speed_direction
-	else:
+	if abs(speed - _previous_speed) > 5:
 		randomize()
-
-		if (randi() % 10) % 2 == 0:
-			_speed_direction = 1
-		else:
-			 _speed_direction = -1
-
+		_speed_direction = [-1, 1][randi() % 2]
 		_previous_speed = speed
-		speed += _speed_direction
 
-	if speed < _min_speed_limit:
-		speed = _min_speed_limit
-
-	if speed < _max_speed_limit:
-		speed = _max_speed_limit
-
-	if speed < 1:
-		speed = 1
+	speed = clamp(speed + _speed_direction, _min_speed_limit, _max_speed_limit)
 
 
 func need_change() -> bool:
