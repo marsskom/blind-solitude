@@ -43,24 +43,21 @@ func _ready():
 	_default_max_clouds_value = clouds_node.max_clouds_count
 
 	character.connect("player_position", clouds_node, "_on_player_position")
-	character.connect("player_position", rain_node, "_on_player_position")
-	character.connect("player_position", snow_node, "_on_player_position")
 
-	if rain_node.is_active:
-		self.connect("available_for_state_changes", rain_node, "_on_state_avail_for_changes")
-		rain_node.connect("increase_max_clouds_to", clouds_node, "set_max_clouds")
-		rain_node.connect("precipitation_begin", self, "_on_precipitation_begin")
-		rain_node.connect("precipitation_ended", self, "_on_precipitation_ended")
+	var precipitation_nodes: Array = [rain_node, snow_node]
+	for node in precipitation_nodes:
+		if not node.is_active:
+			continue
+
+		character.connect("player_position", node, "_on_player_position")
+		self.connect("available_for_state_changes", node, "_on_state_avail_for_changes")
+		node.connect("increase_max_clouds_to", clouds_node, "set_max_clouds")
+		node.connect("precipitation_begin", self, "_on_precipitation_begin")
+		node.connect("precipitation_ended", self, "_on_precipitation_ended")
 
 	if lightning_node.is_active:
 		rain_node.connect("enable_lightning", self, "_on_enable_lightning")
 		rain_node.connect("disable_lightning", self, "_on_disable_lightning")
-
-	if snow_node.is_active:
-		self.connect("available_for_state_changes", snow_node, "_on_state_avail_for_changes")
-		snow_node.connect("increase_max_clouds_to", clouds_node, "set_max_clouds")
-		snow_node.connect("precipitation_begin", self, "_on_precipitation_begin")
-		snow_node.connect("precipitation_ended", self, "_on_precipitation_ended")
 
 
 func _process(_delta):

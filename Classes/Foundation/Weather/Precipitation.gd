@@ -31,8 +31,7 @@ func may_start() -> bool:
 	if _in_process:
 		return false
 
-	var diff_real_seconds: float = TimeSystem.get_diff(_last_time_finished)
-	var diff_seconds: float = TimeSystem.to_seconds(TimeSystem.get_datetime(diff_real_seconds))
+	var diff_seconds: float = TimeSystem.get_diff(_last_time_finished)
 
 	if diff_seconds <= _time_between_in_minutes * TimeSystem.get_seconds_in_minutes():
 		return false
@@ -70,8 +69,7 @@ func start() -> void:
 
 
 func may_stop() -> bool:
-	var diff_real_seconds = TimeSystem.get_diff(_last_time_started)
-	var diff_seconds = TimeSystem.to_seconds(TimeSystem.get_datetime(diff_real_seconds))
+	var diff_seconds = TimeSystem.get_diff(_last_time_started)
 
 	return diff_seconds > _duration_minutes * TimeSystem.get_seconds_in_minutes()
 

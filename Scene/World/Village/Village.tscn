@@ -68,10 +68,6 @@ position = Vector2( 72, 178 )
 position = Vector2( 0, -78 )
 character_node = NodePath("../Player")
 
-[node name="Rain" parent="YSort/Weather/Components" index="3"]
-rain_duration_minutes = 60
-time_between_rain_minutes = 360
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
