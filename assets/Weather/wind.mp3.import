@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/wind.mp3-1dba4c597690ed72b0fadcf93a9a8373.mp3str"
+
+[deps]
+
+source_file="res://assets/Weather/wind.mp3"
+dest_files=[ "res://.import/wind.mp3-1dba4c597690ed72b0fadcf93a9a8373.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

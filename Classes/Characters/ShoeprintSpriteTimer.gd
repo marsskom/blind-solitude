@@ -12,6 +12,7 @@ func run():
 func _modulate() -> void:
 	sprite.modulate.a = lerp(sprite.modulate.a, 0, 0.6)
 
+	disconnect("timeout", self, "_modulate")
 	connect("timeout", self, "_on_timer_timeout")
 	start(3)
 

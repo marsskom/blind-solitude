@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scene/World/Weather/Weather.gd" type="Script" id=1]
 [ext_resource path="res://Scene/World/Weather/Components/DayNightCycle.gd" type="Script" id=2]
+[ext_resource path="res://assets/Weather/thunder.wav" type="AudioStream" id=3]
 [ext_resource path="res://Classes/Foundation/Weather/Wind.gd" type="Script" id=4]
 [ext_resource path="res://Classes/Foundation/Weather/Clouds.gd" type="Script" id=5]
 [ext_resource path="res://assets/Weather/Clouds/first_cloud.png" type="Texture" id=6]
@@ -16,6 +17,7 @@
 [ext_resource path="res://assets/Weather/snowflake.png" type="Texture" id=15]
 [ext_resource path="res://Scene/World/Weather/Components/Lightning.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scene/World/Weather/Components/LightningGenerator.gd" type="Script" id=17]
+[ext_resource path="res://assets/Weather/rain.mp3" type="AudioStream" id=18]
 
 [sub_resource type="Animation" id=1]
 resource_name = "DayNightCycle"
@@ -200,6 +202,11 @@ shape = SubResource( 7 )
 [node name="Rain" type="Node" parent="Components"]
 script = ExtResource( 13 )
 
+[node name="Rain" type="AudioStreamPlayer" parent="Components/Rain"]
+stream = ExtResource( 18 )
+mix_target = 1
+bus = "Weather"
+
 [node name="Particles2D" type="Particles2D" parent="Components/Rain"]
 position = Vector2( 220, -50 )
 emitting = false
@@ -229,6 +236,11 @@ script = ExtResource( 17 )
 __meta__ = {
 "_editor_description_": ""
 }
+
+[node name="Thunder" type="AudioStreamPlayer" parent="Components/LightningGenerator"]
+stream = ExtResource( 3 )
+mix_target = 1
+bus = "Weather"
 
 [node name="Lightning" parent="Components/LightningGenerator" instance=ExtResource( 16 )]
 

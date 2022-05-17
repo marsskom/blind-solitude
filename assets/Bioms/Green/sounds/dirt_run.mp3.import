@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/dirt_run.mp3-a137833a3f1829e0a6fd8012e15ccc74.mp3str"
+
+[deps]
+
+source_file="res://assets/Bioms/Green/sounds/dirt_run.mp3"
+dest_files=[ "res://.import/dirt_run.mp3-a137833a3f1829e0a6fd8012e15ccc74.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

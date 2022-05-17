@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Characters/Accessories.gd"
 }, {
+"base": "Node",
+"class": "AudioPlayer",
+"language": "GDScript",
+"path": "res://Classes/Node/AudioPlayer.gd"
+}, {
 "base": "Reference",
 "class": "BiomModulate",
 "language": "GDScript",
@@ -58,6 +63,11 @@ _global_script_classes=[ {
 "class": "Distance",
 "language": "GDScript",
 "path": "res://Classes/Foundation/Measurement/Distance.gd"
+}, {
+"base": "Reference",
+"class": "GreenBiomGroundTileMapRepresentative",
+"language": "GDScript",
+"path": "res://Scene/World/Bioms/Green/GreenBiomGroundTileMapRepresentative.gd"
 }, {
 "base": "Reference",
 "class": "GutHookScript",
@@ -130,6 +140,16 @@ _global_script_classes=[ {
 "path": "res://test/unit/Foundation/Model/TestCustomeState.gd"
 }, {
 "base": "Reference",
+"class": "TileMapRepresentative",
+"language": "GDScript",
+"path": "res://Scene/World/Bioms/TileMapRepresentative.gd"
+}, {
+"base": "Node",
+"class": "TileMapSoundComponent",
+"language": "GDScript",
+"path": "res://Classes/Bioms/TileMapSoundComponent.gd"
+}, {
+"base": "Reference",
 "class": "UUID",
 "language": "GDScript",
 "path": "res://Autoload/UUID.gd"
@@ -141,6 +161,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Accessories": "",
+"AudioPlayer": "",
 "BiomModulate": "",
 "Character": "",
 "CharacterState": "",
@@ -150,6 +171,7 @@ _global_script_class_icons={
 "Collection": "",
 "Datetime": "",
 "Distance": "",
+"GreenBiomGroundTileMapRepresentative": "",
 "GutHookScript": "",
 "GutTest": "",
 "Lightning": "",
@@ -164,6 +186,8 @@ _global_script_class_icons={
 "StateMachine": "",
 "Stuff": "",
 "TestCustomState": "",
+"TileMapRepresentative": "",
+"TileMapSoundComponent": "",
 "UUID": "",
 "Wind": ""
 }
@@ -180,6 +204,7 @@ config/windows_native_icon="res://icon.png"
 
 Log="*res://Autoload/Log.gd"
 TimeSystem="*res://Autoload/TimeSystem.gd"
+SoundBus="*res://Autoload/SoundBus.gd"
 
 [display]
 

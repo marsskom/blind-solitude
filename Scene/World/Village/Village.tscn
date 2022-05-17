@@ -76,6 +76,14 @@ position = Vector2( 72, 178 )
 position = Vector2( 0, -78 )
 character_node = NodePath("../Player")
 
+[node name="Rain" parent="YSort/Weather/Components" index="3"]
+clouds_count = 50
+time_between_rain_minutes = 1
+is_thunderstorm = true
+
+[node name="Snow" parent="YSort/Weather/Components" index="4"]
+clouds_count = 50
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
