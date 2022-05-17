@@ -56,7 +56,7 @@ func _past_shoeprint(sprite_name: String) -> void:
 	shoeprint.visible = true
 
 	var shoeprint_timer: Timer = self.timer.duplicate()
-	shoeprint_timer.owner = shoeprint
+	shoeprint_timer.set_owner(shoeprint)
 	shoeprint.add_child(shoeprint_timer)
 
 	scene_container.add_child(shoeprint)

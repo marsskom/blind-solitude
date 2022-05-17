@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/grass_fast.mp3-b8825944132d6330dea4a6733144d998.mp3str"
+
+[deps]
+
+source_file="res://assets/Bioms/Green/sounds/grass_fast.mp3"
+dest_files=[ "res://.import/grass_fast.mp3-b8825944132d6330dea4a6733144d998.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -11,9 +11,11 @@ export(bool) var is_active: bool = true
 export(int) var clouds_count: int = 100
 export(int) var rain_duration_minutes: int = 2
 export(int) var time_between_rain_minutes: int = 20
+export(bool) var is_thunderstorm: bool = false
 
 onready var timer: Timer = $Timer
 onready var particles: Particles2D = $Particles2D
+onready var rain_sound: AudioStreamPlayer = $Rain
 
 var _precipitation: Precipitation setget , get_precipitation
 var _is_enabled: bool setget set_enabled, get_enabled
@@ -59,7 +61,7 @@ func _on_rain_started() -> void:
 	emit_signal("increase_max_clouds_to", clouds_count)
 
 	randomize()
-	if (randi() % 11) % 2 == 0:
+	if is_thunderstorm or (randi() % 11) % 2 == 0:
 		emit_signal("enable_lightning")
 
 	timer.start(5)
@@ -67,6 +69,7 @@ func _on_rain_started() -> void:
 
 func _on_rain_stopped() -> void:
 	particles.emitting = false
+	rain_sound.stop()
 
 	emit_signal("disable_lightning")
 	emit_signal("precipitation_ended", "Rain")
@@ -74,6 +77,7 @@ func _on_rain_stopped() -> void:
 
 func _on_timer_timeout() -> void:
 	particles.emitting = true
+	rain_sound.play()
 	timer.stop()
 
 

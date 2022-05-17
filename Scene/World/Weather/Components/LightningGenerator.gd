@@ -19,6 +19,7 @@ onready var lightning_scene: PackedScene = preload("res://Scene/World/Weather/Co
 onready var flash: Control = $CanvasLayer/Flash
 onready var timer: Timer = $Timer
 onready var path_follow: PathFollow2D = $Path2D/PathFollow2D
+onready var thunder: AudioStreamPlayer = $Thunder
 
 var _is_enabled: bool setget set_enabled, get_enabled
 
@@ -57,7 +58,7 @@ func _on_timer_timeout() -> void:
 
 	create(start, start * 6.66)
 
-	timer.start(randi() % 10 + 1)
+	timer.start(max(5, randi() % 10 + 1))
 
 
 func create(start_position: Vector2, target_position: Vector2):
@@ -127,6 +128,7 @@ func _blink(
 	lightning_instance.segmentize(from, start_point)
 	lightning_instance.sway(normalized)
 
+	thunder.play()
 	_frame(lightning_instance)
 
 

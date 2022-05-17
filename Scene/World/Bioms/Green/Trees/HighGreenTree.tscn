@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/Bioms/Green/tree1A.png" type="Texture" id=1]
 [ext_resource path="res://Scene/World/Bioms/Green/Trees/HighGreenTree.gd" type="Script" id=2]
+[ext_resource path="res://assets/Weather/wind.mp3" type="AudioStream" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -66,7 +67,7 @@ script = ExtResource( 2 )
 position = Vector2( 0, 1 )
 frames = SubResource( 11 )
 animation = "Animate"
-frame = 2
+frame = 6
 playing = true
 offset = Vector2( 0, -51 )
 
@@ -81,6 +82,12 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TransparentArea"]
 position = Vector2( 0, -55 )
 shape = SubResource( 13 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -5.0
+autoplay = true
+bus = "Wind"
 
 [connection signal="area_entered" from="TransparentArea" to="." method="_on_TransparentArea_area_entered"]
 [connection signal="area_exited" from="TransparentArea" to="." method="_on_TransparentArea_area_exited"]
