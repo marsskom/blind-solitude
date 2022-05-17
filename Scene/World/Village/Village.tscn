@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scene/Characters/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scene/World/Bioms/Green/Ground.tscn" type="PackedScene" id=2]
@@ -15,6 +15,8 @@ background_mode = 4
 glow_enabled = true
 glow_intensity = 1.0
 glow_strength = 1.2
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
 [node name="Village" type="Node2D"]
 script = ExtResource( 8 )
@@ -49,6 +51,12 @@ tile_data = PoolIntArray( -983036, 0, 65536, -983035, 0, 2, -983034, 0, 3, -9830
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 197, 175 )
 
+[node name="AnimationTree" parent="YSort/Player" index="3"]
+parameters/playback = SubResource( 2 )
+
+[node name="Shoeprint" parent="YSort/Player" index="6"]
+scene_container_node = NodePath("../..")
+
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
 remote_path = NodePath("../../../Camera2D")
 
@@ -68,10 +76,6 @@ position = Vector2( 72, 178 )
 position = Vector2( 0, -78 )
 character_node = NodePath("../Player")
 
-[node name="Rain" parent="YSort/Weather/Components" index="3"]
-rain_duration_minutes = 60
-time_between_rain_minutes = 360
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -84,6 +88,8 @@ script = ExtResource( 9 )
 character_node = NodePath("../../YSort/Player")
 
 [editable path="Camera2D"]
+[editable path="YSort/Player"]
+[editable path="YSort/Player/Hurtbox"]
 [editable path="YSort/Weather"]
 [editable path="YSort/Weather/Components/Clouds/Templates/FirstTemplate/SoftCollisionComponent"]
 [editable path="YSort/Weather/Components/Clouds/Templates/SecondTemplate/SoftCollisionComponent"]

@@ -7,8 +7,8 @@ signal precipitation_ended
 
 export(bool) var is_active: bool = false
 export(int) var clouds_count: int = 100
-export(int) var snow_duration_minutes: int = 30
-export(int) var time_between_snow_minutes: int = 90
+export(int) var snow_duration_minutes: int = 2
+export(int) var time_between_snow_minutes: int = 20
 
 onready var timer: Timer = $Timer
 onready var particles: Particles2D = $Particles2D

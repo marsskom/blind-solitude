@@ -2,9 +2,14 @@ extends KinematicBody2D
 
 onready var animated_sprite: AnimatedSprite = $AnimatedSprite
 
+var modulate_model: BiomModulate
+
+func _ready():
+	modulate_model = BiomModulate.new(animated_sprite)
+
 func _on_TransparentArea_area_entered(_area):
-	animated_sprite.modulate.a = 0.4
+	modulate_model.entered()
 
 
 func _on_TransparentArea_area_exited(_area):
-	animated_sprite.modulate.a = 1
+	modulate_model.exited()
