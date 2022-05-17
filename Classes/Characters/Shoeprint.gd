@@ -52,7 +52,6 @@ func _past_shoeprint(sprite_name: String) -> void:
 	var shoeprint = _collection.get(sprite_name).duplicate()
 
 	shoeprint.name = UUID.v4()
-	Log.debug("CP: %s | SHP: %s" % [character.position, shoeprint.position])
 	shoeprint.position = character.position + shoeprint.position
 	shoeprint.visible = true
 
