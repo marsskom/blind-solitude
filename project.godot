@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Node/AudioPlayer.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "BasicKinematicBody",
+"language": "GDScript",
+"path": "res://Classes/Node/BasicKinematicBody.gd"
+}, {
 "base": "Reference",
 "class": "BiomModulate",
 "language": "GDScript",
@@ -28,11 +33,6 @@ _global_script_classes=[ {
 "class": "Character",
 "language": "GDScript",
 "path": "res://Classes/Characters/Character.gd"
-}, {
-"base": "Node",
-"class": "CharacterState",
-"language": "GDScript",
-"path": "res://Classes/Characters/CharacterState.gd"
 }, {
 "base": "Sprite",
 "class": "Cloud",
@@ -78,6 +78,11 @@ _global_script_classes=[ {
 "class": "GutTest",
 "language": "GDScript",
 "path": "res://addons/gut/test.gd"
+}, {
+"base": "Node",
+"class": "KinematicBodyState",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/Specific/KinematicBodyState.gd"
 }, {
 "base": "Line2D",
 "class": "Lightning",
@@ -129,6 +134,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Classes/Foundation/States/StateMachine.gd"
 }, {
+"base": "Reference",
+"class": "StateManager",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/StateManager.gd"
+}, {
+"base": "Reference",
+"class": "StateManagerBuilder",
+"language": "GDScript",
+"path": "res://Classes/Foundation/States/Builders/StateManagerBuilder.gd"
+}, {
 "base": "Node",
 "class": "Stuff",
 "language": "GDScript",
@@ -162,9 +177,9 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Accessories": "",
 "AudioPlayer": "",
+"BasicKinematicBody": "",
 "BiomModulate": "",
 "Character": "",
-"CharacterState": "",
 "Cloud": "",
 "CloudFactory": "",
 "Clouds": "",
@@ -174,6 +189,7 @@ _global_script_class_icons={
 "GreenBiomGroundTileMapRepresentative": "",
 "GutHookScript": "",
 "GutTest": "",
+"KinematicBodyState": "",
 "Lightning": "",
 "LightningGenerator": "",
 "Moon": "",
@@ -184,6 +200,8 @@ _global_script_class_icons={
 "Speed": "",
 "State": "",
 "StateMachine": "",
+"StateManager": "",
+"StateManagerBuilder": "",
 "Stuff": "",
 "TestCustomState": "",
 "TileMapRepresentative": "",

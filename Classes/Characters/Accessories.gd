@@ -14,8 +14,8 @@ func _ready():
 	self._collection = Collection.new(get_children())
 	# TODO: set visible those accessories which already must be visible
 
-	character.connect("vector_changed", self, "_on_vector_changed")
-	character.connect("state_changed", self, "_on_state_changed")
+	character.connect("kb_direction_changed", self, "_on_vector_changed")
+	character.connect("kb_state_changed", self, "_on_state_changed")
 
 
 func collection() -> Collection:
